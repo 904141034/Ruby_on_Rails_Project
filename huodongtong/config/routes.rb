@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
   resources :users
-  resources :sessions ,only:[:new,:create,:destroy]
-  root to:'users#welcome'
+  root to:'users#login'
   match '/signup', to: 'users#signup', via: 'get'
-  match '/login', to: 'users#login', via: 'get'
+  match '/welcome', to: 'users#welcome', via: 'get'
+  post '/create_login_session',to:'users#create_login_session'
+
 
 
   # The priority is based upon order of creation: first created -> highest priority.

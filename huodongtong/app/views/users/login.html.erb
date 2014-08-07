@@ -8,24 +8,25 @@
     <%= form_tag '/create_login_session' do %>
         <div class="input-group">
           <div class=" input-group-addon">
-          <%= label_tag "帐号" %>
+            <%= label_tag "帐号" %>
           </div>
-          <%= text_field_tag :name,params[:name], class: " form-control "%>
+          <%= text_field_tag :name, params[:name], class: " form-control " %>
         </div>
         <br>
+
         <div class="input-group">
           <div class=" input-group-addon">
-          <%= label_tag "密码" %>
+            <%= label_tag "密码" %>
           </div>
-          <%= password_field_tag :password,params[:password], class: " form-control "%>
+          <%= password_field_tag :password, params[:password], class: " form-control " %>
         </div>
         <br>
+
         <div class="login_user">
           <%= link_to "忘记密码" %>
         </div>
         <br>
-        <p><%= submit_tag "登录",class: "btn btn-large btn-primary sign_up_button" %>
-
+        <p><%= submit_tag "登录", class: "btn btn-large btn-primary sign_up_button" %>
     <% end %>
   </div>
 </div>
