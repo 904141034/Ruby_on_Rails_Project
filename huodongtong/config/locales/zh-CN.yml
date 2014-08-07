@@ -1,0 +1,27 @@
+zh-CN:
+  activerecord:
+    attributes:
+      user:
+        name: "账号"
+        password: "请设置密码"
+        password_confirmation: "请确认密码"
+        forget_password_question: "忘记密码问题"
+        forget_password_answer: "忘记密码答案"
+    errors:
+      models:
+       user:
+        attributes:
+          forget_password_question:
+           blank: "请将注册信息填写完整"
+          forget_password_answer:
+           blank: "请将注册信息填写完整"
+          name:
+            blank: "请将注册信息填写完整"
+            taken: "该帐号已注册"
+          password:
+            blank: "请将注册信息填写完整"
+            too_short: "最短%{count}个字符"
+          password_confirmation:
+            blank: "请将注册信息填写完整"
+            confirmation: "两次密码输入不一致，请重新输入"
+          

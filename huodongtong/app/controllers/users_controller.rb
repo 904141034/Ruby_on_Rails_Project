@@ -17,7 +17,7 @@ class UsersController < ApplicationController
       redirect_to :welcome,:notice=>"登录成功"
     else
       flash[:error]="无效的用户名和密码"
-      redirect_to :root_path
+      redirect_to :root
     end
   end
 
@@ -29,6 +29,7 @@ class UsersController < ApplicationController
   def create
     @user=User.new(user_params)
     if @user.save
+      cookies.permanent[:token]=@user.token
       redirect_to :welcome, :notice => "注册成功"
     else
       render :signup

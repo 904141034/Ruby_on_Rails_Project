@@ -6,32 +6,33 @@
           <%= link_to "用户登录", root_path %>
         </div>
         <br>
+
         <div class="input-group">
-          <%= f.label :帐号 , class: " input-group-addon " %>
+          <%= f.label :name , class: "input-group-addon " ,:style => "padding-left: 50px;padding-right: 50px"%>
           <%= f.text_field :name, class: " form-control " %>
         </div>
         <br>
 
         <div class="input-group">
-          <%= f.label :请设置密码, class: " input-group-addon" %>
+          <%= f.label :password, class: "input-group-addon" ,:style => "padding-left: 30px;padding-right: 30px"%>
           <%= f.password_field :password, class: "form-control" %>
         </div>
         <br>
 
         <div class="input-group">
-          <%= f.label :password_confirmation, "请确认密码", class: " input-group-addon" %>
+          <%= f.label :password_confirmation, class: " input-group-addon",:style => "padding-left: 30px;padding-right: 30px" %>
           <%= f.password_field :password_confirmation, class: "form-control" %>
         </div>
         <br>
 
         <div class="input-group">
-          <%= f.label :忘记密码问题, class: " input-group-addon" %>
+          <%= f.label :forget_password_question, class: " input-group-addon",:style => "padding-left: 24px;padding-right: 24px" %>
           <%= f.text_field :forget_password_question, class: "form-control" %>
         </div>
         <br>
 
         <div class="input-group">
-          <%= f.label :忘记密码答案, class: " input-group-addon" %>
+          <%= f.label :forget_password_answer, class: " input-group-addon" ,:style => "padding-left: 24px;padding-right: 24px"%>
           <%= f.text_field :forget_password_answer, class: "form-control" %>
         </div>
         <br>
