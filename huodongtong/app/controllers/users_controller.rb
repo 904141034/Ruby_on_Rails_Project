@@ -21,6 +21,11 @@ class UsersController < ApplicationController
     end
   end
 
+  def logout
+    cookies.delete(:token)
+    redirect_to root_url,:notice=>"已经退出登录"
+  end
+
   def create
     @user=User.new(user_params)
     if @user.save
