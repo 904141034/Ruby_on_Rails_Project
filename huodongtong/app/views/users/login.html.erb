@@ -1,0 +1,26 @@
+<div class="single-form-container">
+  <div class="well well-lg backpanel">
+    <%= form_for @user do |f| %>
+        <div class="register">用户登录</div>
+        <div class="login_user">
+          <%= link_to "用户注册", sign_path %>
+        </div>
+        <br>
+        <div class="input-group">
+          <%= f.label :帐号 , class: " input-group-addon " %>
+          <%= f.text_field :name, class: " form-control " %>
+        </div>
+        <br>
+
+        <div class="input-group">
+          <%= f.label :密码, class: " input-group-addon" %>
+          <%= f.password_field :password, class: "form-control" %>
+        </div>
+        <br>
+        <div class="login_user">
+          <%= link_to "忘记密码", # %>
+        </div>
+        <p><%= f.submit "登录", class: "btn btn-large btn-primary sign_up_button" %></p>
+    <% end %>
+    </div>
+</div>

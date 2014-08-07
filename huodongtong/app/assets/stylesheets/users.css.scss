@@ -1,0 +1,117 @@
+// Place all the styles related to the users controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+html {
+  overflow-y: scroll;
+}
+
+body {
+  padding-top: 60px;
+}
+
+section {
+  overflow: auto;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.center {
+  text-align: center;
+  margin-top: 80px;
+}
+
+.center h1 {
+  margin-bottom: 10px;
+}
+/* typography */
+
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1;
+}
+
+h1 {
+  font-size: 3em;
+  letter-spacing: -2px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+h2 {
+  font-size: 1.2em;
+  letter-spacing: -1px;
+  margin-bottom: 30px;
+  text-align: center;
+  font-weight: normal;
+  color: #999;
+}
+
+p {
+  font-size: 1.1em;
+  line-height: 1.7em;
+}
+/* header */
+#logo {
+  float: left;
+  margin-right: 10px;
+  font-size: 2.6em;
+  color: #000;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+  padding-top: 9px;
+//  font-weight: bold;
+  line-height: 1;
+}
+
+#logo:hover {
+  color: #000;
+  text-decoration: none;
+}
+.tna {
+  margin-top: 0px;
+}
+.tna a{
+  color:#000;
+  font-size: 20px;
+}
+.welcome{
+  color: #9acfea;
+  font-size: 60px;
+  margin-top:100px;
+
+}
+.boxed-group{
+  content:center;
+  margin-left:25%;
+  width:50%;
+
+}
+.box-center{
+  width:100px;
+}
+.box-control{
+  width:200px;
+}
+.backpanel{
+  color:#f5f5f5;
+  width:50%;
+  height:20%;
+  margin-left: 25%;
+  margin-top:5%;
+
+}
+.register{
+  color:#000000;
+  font-size: 20px;
+  margin-left:0px;
+}
+.login_user{
+  margin-left: 90%;
+  font-size:15px;
+}
+.sign_up_button{
+  margin-left:40%;
+  width:20%;
+}
+

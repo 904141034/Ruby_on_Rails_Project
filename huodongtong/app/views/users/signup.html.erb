@@ -1,0 +1,44 @@
+<div class="single-form-container">
+  <div class="well well-lg backpanel">
+    <%= form_for @user do |f| %>
+        <div class="register">新用户注册</div>
+        <div class="login_user">
+          <%= link_to "用户登录", login_path %>
+        </div>
+        <br>
+        <div class="input-group">
+          <%= f.label :帐号 , class: " input-group-addon " %>
+          <%= f.text_field :name, class: " form-control " %>
+        </div>
+        <br>
+
+        <div class="input-group">
+          <%= f.label :请设置密码, class: " input-group-addon" %>
+          <%= f.password_field :password, class: "form-control" %>
+        </div>
+        <br>
+
+        <div class="input-group">
+          <%= f.label :password_confirmation, "请确认密码", class: " input-group-addon" %>
+          <%= f.password_field :password_confirmation, class: "form-control" %>
+        </div>
+        <br>
+
+        <div class="input-group">
+          <%= f.label :忘记密码问题, class: " input-group-addon" %>
+          <%= f.text_field :forget_password_question, class: "form-control" %>
+        </div>
+        <br>
+
+        <div class="input-group">
+          <%= f.label :忘记密码答案, class: " input-group-addon" %>
+          <%= f.text_field :forget_password_answer, class: "form-control" %>
+        </div>
+        <br>
+
+        <p><%= f.submit "注册", class: "btn btn-large btn-primary sign_up_button" %></p>
+        </div>
+
+    <% end %>
+    </div>
+</div>
