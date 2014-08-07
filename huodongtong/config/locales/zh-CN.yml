@@ -2,11 +2,11 @@ zh-CN:
   activerecord:
     attributes:
       user:
-        name: "账号"
-        password: "请设置密码"
-        password_confirmation: "请确认密码"
-        forget_password_question: "忘记密码问题"
-        forget_password_answer: "忘记密码答案"
+        name: "账号："
+        password: "密码："
+        password_confirmation: "确认密码："
+        forget_password_question: "忘记密码问题："
+        forget_password_answer: "忘记密码答案："
     errors:
       models:
        user:

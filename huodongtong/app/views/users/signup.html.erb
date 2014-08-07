@@ -8,35 +8,39 @@
         <br>
 
         <div class="input-group">
-          <%= f.label :name , class: "input-group-addon " ,:style => "padding-left: 50px;padding-right: 50px"%>
+          <%= f.label :帐号 , class: "input-group-addon " ,:style => "padding-left: 50px;padding-right: 50px"%>
           <%= f.text_field :name, class: " form-control " %>
         </div>
         <br>
 
         <div class="input-group">
-          <%= f.label :password, class: "input-group-addon" ,:style => "padding-left: 30px;padding-right: 30px"%>
+          <%= f.label :请设置密码, class: "input-group-addon" ,:style => "padding-left: 30px;padding-right: 30px"%>
           <%= f.password_field :password, class: "form-control" %>
         </div>
         <br>
 
         <div class="input-group">
-          <%= f.label :password_confirmation, class: " input-group-addon",:style => "padding-left: 30px;padding-right: 30px" %>
+          <%= f.label :请确认密码, class: " input-group-addon",:style => "padding-left: 30px;padding-right: 30px" %>
           <%= f.password_field :password_confirmation, class: "form-control" %>
         </div>
         <br>
 
         <div class="input-group">
-          <%= f.label :forget_password_question, class: " input-group-addon",:style => "padding-left: 24px;padding-right: 24px" %>
+          <%= f.label :忘记密码问题, class: " input-group-addon",:style => "padding-left: 24px;padding-right: 24px" %>
           <%= f.text_field :forget_password_question, class: "form-control" %>
         </div>
         <br>
 
         <div class="input-group">
-          <%= f.label :forget_password_answer, class: " input-group-addon" ,:style => "padding-left: 24px;padding-right: 24px"%>
+          <%= f.label :忘记密码答案, class: " input-group-addon" ,:style => "padding-left: 24px;padding-right: 24px"%>
           <%= f.text_field :forget_password_answer, class: "form-control" %>
         </div>
         <br>
-
+        <% if @user.errors.any? %>
+            <div class="alert alert-danger alert-style">
+              <%= @user.errors.full_messages.first %>
+            </div>
+        <% end %>
         <p><%= f.submit "注册", class: "btn btn-large btn-primary sign_up_button" %></p>
         </div>
 
