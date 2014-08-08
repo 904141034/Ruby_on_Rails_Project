@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  # attr_accessor :name,:password_digest,:forget_password_question,:forget_password_answer,:role,:token
   before_create{ generate_token(:token)}
   validates :name, :presence=> true,uniqueness: {:case_sensitive => false}
   validates :password,:presence => true, :on => :create

@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   match '/welcome', to: 'users#welcome', via: 'get'
   post '/create_login_session',to:'users#create_login_session'
   delete'logout',to:'users#logout',:as =>'logout'
-
+  get 'manager_index',to:'users#manager_index',:as => 'manager_index'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
