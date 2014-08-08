@@ -16,7 +16,7 @@ class UsersController < ApplicationController
       cookies.permanent[:token]=user.token
       redirect_to :welcome,:notice=>"登录成功"
     else
-      flash[:error]="无效的用户名和密码"
+      flash[:error]="用户名或密码错误"
       redirect_to :root
     end
   end

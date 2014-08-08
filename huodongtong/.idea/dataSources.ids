@@ -53,4 +53,9 @@
       <primary-key columns="id"/>
     </table>
   </data-source>
+  <data-source source="LOCAL" name="Rails huodongtong: production" uuid="2f7c0080-94f5-42ce-b895-1df9a10c6a36">
+    <database-info product="SQLite" version="3.7.6.3" jdbc-version="2.1" driver-name="SQLiteJDBC" driver-version="native"/>
+    <case-sensitivity plain-identifiers="mixed" quoted-identifiers="mixed"/>
+    <schema name="" catalog=""/>
+  </data-source>
 </component>

@@ -22,13 +22,6 @@ test:
 
 production:
   <<: *default
-  database: db/production.sqlite3
+  database: db/development.sqlite3
 
-production:
-  adapter: sqlite3
-  encoding: utf8
-  reconnect: false
-  database: users
-  pool: 5
-  username: root
-  password: password
+
