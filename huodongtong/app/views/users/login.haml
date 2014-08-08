@@ -1,0 +1,25 @@
+.single-form-container
+  .well.well-lg.backpanel
+    .register 用户登录
+    .login_user
+      = link_to "用户注册", signup_path
+    %br
+    = form_tag '/create_login_session' do
+      .input-group
+        .input-group-addon.login_label
+          = label_tag "帐号"
+        = text_field_tag :name, params[:name], class: " form-control "
+      %br
+      .input-group
+        .input-group-addon.login_label
+          = label_tag "密码"
+        = password_field_tag :password, params[:password], class: " form-control "
+      %br
+        -flash.each do |key, value|
+          .alert.alert-danger.alert-style
+            %div{:class => "alert-#{key}"}= value
+        .login_user
+          = link_to "忘记密码"
+      %br
+      %p
+        = submit_tag "登录", class: "btn btn-large btn-primary sign_up_button"

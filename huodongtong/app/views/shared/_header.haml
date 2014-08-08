@@ -1,0 +1,10 @@
+.navbar.navbar-default.navbar-fixed-top
+  .container
+    = link_to "活动通", '#', id: "logo"
+    %nav
+      %ul.tna.nav.pull-right
+        -if current_user
+          .login_title
+            你好，
+            \#{p current_user.name}
+            \#{link_to "退出", logout_path, method: 'delete', class: 'logout_title'}
