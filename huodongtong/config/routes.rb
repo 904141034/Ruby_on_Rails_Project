@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :users
-  root to:'users#login'
+  root to:'users#manager_index'
   match '/signup', to: 'users#signup', via: 'get'
   match '/welcome', to: 'users#welcome', via: 'get'
   post '/create_login_session',to:'users#create_login_session'
