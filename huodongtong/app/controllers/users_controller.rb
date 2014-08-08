@@ -8,6 +8,7 @@ class UsersController < ApplicationController
   end
 
   def login
+    create_admin
   end
 
   def create_login_session
@@ -27,23 +28,21 @@ class UsersController < ApplicationController
   end
 
   def create
-    if User.any?
-      # user={}
-      p "dsgdsgsgksdjgjsdjgkdsjgkdsgkdkafjaf"
-      p user_params
       @user=User.new(user_params)
-
       if @user.save
         cookies.permanent[:token]=@user.token
         redirect_to :welcome, :notice => "注册成功"
       else
         render :signup
       end
+  end
+
+  def create_admin
+    if User.any?
     else
-      @user=User.new(name: "admin", password: "admin", password_confirmation: "admin", role: "admin")
+      @user=User.new(:name => 'admin', :password => 'admin', :password_confirmation => 'admin', :forget_password_question => 'admin', :forget_password_answer => 'admin', :role => 'admin')
       if @user.save
         cookies.permanent[:token]=@user.token
-        redirect_to :manager_index
       end
     end
   end
@@ -51,7 +50,7 @@ class UsersController < ApplicationController
   private
   def user_params
     params[:user][:role]='user'
-    params.require(:user).permit(:name, :password, :password_confirmation, :forget_password_question, :forget_password_answer,:role)
-
+    params.require(:user).permit(:name, :password, :password_confirmation, :forget_password_question, :forget_password_answer, :role)
   end
+
 end
