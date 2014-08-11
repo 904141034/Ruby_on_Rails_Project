@@ -12,6 +12,10 @@ Rails.application.routes.draw do
   post '/change_password_action',to:'users#change_password_action'
   get '/forget_one',to:'users#forget_one', :as => 'forget_one'
   post '/next_one',to:'users#next_one'
+  get '/forget_two',to:'users#forget_two', :as => 'forget_two'
+  post '/next_two',to:'users#next_two'
+  get '/forget_three',to:'users#forget_three', :as => 'forget_three'
+  post '/next_three',to:'users#next_three'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

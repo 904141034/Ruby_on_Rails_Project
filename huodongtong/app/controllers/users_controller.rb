@@ -84,6 +84,7 @@ class UsersController < ApplicationController
     User.find_by_name(params[:name]).delete
     redirect_to :manager_index
   end
+
   def change_password_action
     user=User.find_by_name(session[:name])
     if params[:password]==params[:password_confirmation]
@@ -94,8 +95,8 @@ class UsersController < ApplicationController
       session[:result]= @result
       redirect_to :change_password
     else
-        flash[:error]="两次密码输入不一致，请重新输入！"
-        render :change_password
+      flash[:error]="两次密码输入不一致，请重新输入！"
+      render :change_password
     end
   end
 
@@ -108,13 +109,47 @@ class UsersController < ApplicationController
   def forget_one
 
   end
+
   def next_one
-    if params[:name]==""
-      flash[:error]="帐号不能为空"
-      render :forget_one
+    user=User.find_by_name(params[:name])
+    if user
+      session[:name]=user.name
+      session[:forget_password_question]=user.forget_password_question
+      session[:forget_password_answer]=user.forget_password_answer
+      redirect_to :forget_two
     else
-      
+      if params[:name]==""
+        flash[:error]="帐号不能为空"
+        render :forget_one
+      else
+        flash[:error]="该帐号不存在"
+        render :forget_one
+      end
     end
+  end
+
+  def forget_two
+
+  end
+
+  def next_two
+    puts('kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk')
+    puts(session[:forget_password_answer])
+    puts(params[:answer])
+    if session[:forget_password_answer]==params[:answer]
+      redirect_to :forget_three
+    else
+      flash[:error]="忘记密码答案错误"
+      redirect_to :forget_two
+    end
+  end
+
+  def forget_three
+
+  end
+
+  def next_three
+
   end
 
   private
