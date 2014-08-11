@@ -12,6 +12,7 @@ class UsersController < ApplicationController
   end
 
   def create_login_session
+    flash[:error].display
     user=User.find_by_name(params[:name])
     if user && user.authenticate(params[:password])
       cookies.permanent[:token]=user.token
@@ -31,6 +32,7 @@ class UsersController < ApplicationController
 
   def logout
     cookies.delete(:token)
+    flash[:error].display
     redirect_to root_url
   end
 
@@ -133,9 +135,6 @@ class UsersController < ApplicationController
   end
 
   def next_two
-    puts('kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk')
-    puts(session[:forget_password_answer])
-    puts(params[:answer])
     if session[:forget_password_answer]==params[:answer]
       redirect_to :forget_three
     else
@@ -149,7 +148,25 @@ class UsersController < ApplicationController
   end
 
   def next_three
-
+    if params[:password]==params[:password_confirmation]&&params[:password]!=""
+      user=User.find_by_name(session[:name])
+      user.password=params[:password]
+      user.password_confirmation=params[:password_confirmation]
+      if user.save
+        cookies.permanent[:token]=user.token
+        redirect_to :welcome
+      end
+    else
+      if params[:password]==""||params[:password_confirmation]==""
+        flash[:error]="密码或确认密码不能为空"
+        render :forget_three
+      else
+        if params[:password]!=params[:password_confirmation]
+          flash[:error]="两次密码输入不一致，请重新输入"
+          render :forget_three
+        end
+      end
+    end
   end
 
   private
@@ -157,6 +174,5 @@ class UsersController < ApplicationController
     params[:user][:role]='Ordinary_user'
     params.require(:user).permit(:name, :password, :password_confirmation, :forget_password_question, :forget_password_answer, :role)
   end
-
 end
 

@@ -8,15 +8,15 @@
       .input-group
         .input-group-addon.login_label
           = label_tag "请设置密码"
-        = text_field_tag :name, params[:password], class: " form-control ",:placeholder=>'请输入新密码'
+        = password_field_tag :password, params[:password], class: " form-control ",:placeholder=>'请输入新密码'
       %br
         .input-group
           .input-group-addon.login_label
             = label_tag "请确认密码"
-          = text_field_tag :password_confirmation, params[:password_confirmation], class: " form-control ",:placeholder=>'请再次输入'
+          = password_field_tag :password_confirmation, params[:password_confirmation], class: " form-control ",:placeholder=>'请再次输入'
       %br
         - if flash[:error]
           .alert.alert-danger.flash_center
             =flash[:error]
       %p
-        = submit_tag "下一步", class: "btn btn-large btn-primary sign_up_button"
+        = submit_tag "确认修改", class: "btn btn-large btn-primary sign_up_button"
