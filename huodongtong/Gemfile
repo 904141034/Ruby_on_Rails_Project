@@ -38,6 +38,9 @@ gem 'i18n'
 gem 'jade'
 gem 'haml'
 gem 'yaml_db'
+gem 'will_paginate','3.0.7'
+gem 'will_paginate-bootstrap'
+gem 'thin'
 # Use unicorn as the app server
 # gem 'unicorn'
 

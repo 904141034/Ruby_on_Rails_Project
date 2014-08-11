@@ -2,11 +2,18 @@
   .well.well-lg.panel_heading
     .manager-index-header
       用户管理 &nbsp&nbsp&nbsp
-      %button
-        = link_to "+添加用户"
-  %table.table.panel-first-row
+      %button= link_to "+添加用户", add_user_path
+  %table.table.panel-first-row.table-bordered
     %tr
       %td(align="center")  编号
       %td(align="center")  用户名
       %td(align="center")   操作
-
+    - @user.each do |user|
+      %tr
+        %td(align="center")= user.id-1
+        %td(align="center")= user.name
+        %td(align="center")
+          = link_to "删除"
+          = link_to "修改密码"
+  .panel_paginate
+    = will_paginate @user, :previous_label=>'<<',:next_label=>'>>'

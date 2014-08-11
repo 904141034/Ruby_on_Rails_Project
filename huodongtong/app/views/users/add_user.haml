@@ -1,0 +1,34 @@
+%ol.breadcrumb.breadtitle
+  %li
+    %a{:href => manager_index_path} 首页
+  %li.active 添加用户
+.single-form-container
+  .well.well-lg.backpanel
+    = form_for @user do |f|
+      %br
+        .input-group
+          = f.label :帐号, class: "input-group-addon ", :style => "padding-left: 50px;padding-right: 50px"
+          = f.text_field :name, class: " form-control "
+      %br
+        .input-group
+          = f.label :请设置密码, class: "input-group-addon", :style => "padding-left: 30px;padding-right: 30px"
+          = f.password_field :password, class: "form-control"
+      %br
+        .input-group
+          = f.label :请确认密码, class: " input-group-addon", :style => "padding-left: 30px;padding-right: 30px"
+          = f.password_field :password_confirmation, class: "form-control"
+      %br
+        .input-group
+          = f.label :忘记密码问题, class: " input-group-addon", :style => "padding-left: 24px;padding-right: 24px"
+          = f.text_field :forget_password_question, class: "form-control"
+      %br
+        .input-group
+          = f.label :忘记密码答案, class: " input-group-addon", :style => "padding-left: 24px;padding-right: 24px"
+          = f.text_field :forget_password_answer, class: "form-control"
+      %br
+        #{@user.errors}
+        - if @user.errors.any?
+          .alert.alert-danger.alert-style
+            = @user.errors.full_messages.first
+      %p
+        = f.submit "确认添加", class: "btn btn-large btn-primary sign_up_button"

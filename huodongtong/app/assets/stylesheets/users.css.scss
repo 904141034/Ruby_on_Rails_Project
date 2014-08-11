@@ -103,8 +103,7 @@ p {
   width:50%;
   height:20%;
   margin-left: 25%;
-  margin-top:5%;
-
+  margin-top:3%;
 }
 .register{
   color:#000000;
@@ -132,8 +131,8 @@ p {
 }
 /* manager-index */
 .panel_heading{
-  margin-left: 9%;
-  margin-top: 5%;
+  margin-left: 8%;
+  margin-top: 1%;
   width:85%;
   height: 20px;
 }
@@ -142,8 +141,18 @@ p {
   margin-top: -13px;
 }
 .panel-first-row{
-  margin-left: 9%;
+  margin-left: 8%;
   width:85%;
   margin-top: -20px;
+}
+.panel_paginate{
+  text-align:right;
+  margin-left: 8%;
+  margin-top: 0%;
+  width:85%;
+}
+.breadtitle{
+ font-size: 17px;
+
 }
 
