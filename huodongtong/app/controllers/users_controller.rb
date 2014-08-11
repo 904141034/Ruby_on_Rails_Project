@@ -80,9 +80,10 @@ class UsersController < ApplicationController
     @user=User.new
   end
 
-# def show
-#   @user=User.find(params[:id])
-# end
+  def delete_user
+    User.find_by_name(params[:name]).delete
+    redirect_to :manager_index
+  end
   private
   def user_params
     params[:user][:role]='Ordinary_user'
