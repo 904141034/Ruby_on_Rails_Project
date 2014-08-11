@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   get 'manager_index',to:'users#manager_index',:as => 'manager_index'
   match '/add_user',to:'users#add_user',via:'get'
   delete '/delete_user',to:'users#delete_user',:as =>'delete_user'
+  get '/change_password',to:'users#change_password',:as=>'change_password'
+  post '/change_password_action',to:'users#change_password_action'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

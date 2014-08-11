@@ -66,7 +66,7 @@ class UsersController < ApplicationController
   end
 
   def manager_index
-    # session[:name]=''
+    session[:result]=''
     if current_user
       puts(current_user.name)
       user=User.where(:role => 'Ordinary_user')
@@ -84,6 +84,28 @@ class UsersController < ApplicationController
     User.find_by_name(params[:name]).delete
     redirect_to :manager_index
   end
+  def change_password_action
+    user=User.find_by_name(session[:name])
+    if params[:password]==params[:password_confirmation]
+      user.password=params[:password]
+      user.password_confirmation=params[:password_confirmation]
+      user.save
+      @result='success'
+      session[:result]= @result
+      redirect_to :change_password
+    else
+        flash[:error]="两次密码输入不一致，请重新输入！"
+        render :change_password
+    end
+  end
+
+  def change_password
+    if session[:name]==''
+      session[:name]=params[:name]
+    end
+  end
+
+
   private
   def user_params
     params[:user][:role]='Ordinary_user'
