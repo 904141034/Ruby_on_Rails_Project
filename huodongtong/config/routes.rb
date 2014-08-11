@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   delete '/delete_user',to:'users#delete_user',:as =>'delete_user'
   get '/change_password',to:'users#change_password',:as=>'change_password'
   post '/change_password_action',to:'users#change_password_action'
+  get '/forget_one',to:'users#forget_one', :as => 'forget_one'
+  post '/next_one',to:'users#next_one'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

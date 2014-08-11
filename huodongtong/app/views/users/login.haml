@@ -19,7 +19,7 @@
           .alert.alert-danger.alert-style
             %div{:class => "alert-#{key}"}= value
         .login_user
-          = link_to "忘记密码"
+          = link_to "忘记密码",forget_one_path
       %br
       %p
         = submit_tag "登录", class: "btn btn-large btn-primary sign_up_button"

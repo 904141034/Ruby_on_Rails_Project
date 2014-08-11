@@ -105,6 +105,17 @@ class UsersController < ApplicationController
     end
   end
 
+  def forget_one
+
+  end
+  def next_one
+    if params[:name]==""
+      flash[:error]="帐号不能为空"
+      render :forget_one
+    else
+      
+    end
+  end
 
   private
   def user_params

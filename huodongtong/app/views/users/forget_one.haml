@@ -1,0 +1,17 @@
+.single-form-container
+  .well.well-lg.backpanel
+    .register 重置密码
+    .login_user
+      = link_to "用户登录", root_path
+    %br
+    = form_tag '/next_one' do
+      .input-group
+        .input-group-addon.login_label
+          = label_tag "帐号"
+        = text_field_tag :name, params[:name], class: " form-control ",:placeholder=>'请输入帐号名'
+      %br
+        - if flash[:error]
+          .alert.alert-danger.flash_center
+            =flash[:error]
+      %p
+        = submit_tag "下一步", class: "btn btn-large btn-primary sign_up_button"
