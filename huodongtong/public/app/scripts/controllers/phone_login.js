@@ -12,7 +12,6 @@ angular.module('yoDemoApp')
                 "name":name,
                 "password":password
             }).success(function(back){
-                console.log("test",back);
                 if(back.data=="true"){
                     var currentlogUser=new CurrentUser($scope.user_name);
                     CurrentUser.setCurrentUser(currentlogUser);

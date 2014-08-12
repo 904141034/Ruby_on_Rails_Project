@@ -71,9 +71,13 @@ class UsersController < ApplicationController
   def manager_index
     session[:result]=''
     if current_user
-      puts(current_user.name)
       user=User.where(:role => 'Ordinary_user')
       @user=user.paginate(page: params[:page], per_page: 10)
+      if params[:page].to_i==0
+        @us=1
+      else
+        @us=params[:page].to_i
+      end
     else
       redirect_to :root
     end
