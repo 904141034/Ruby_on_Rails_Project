@@ -1,0 +1,14 @@
+#phone_login
+    .header
+        .titlea 活动通
+    .single-form-container
+        .well.well-lg.backpanel
+            br
+            input(name="name" type="text" class="form-control input-lg" placeholder="请输入帐号" ng-model="user_name" required)
+            br
+            br
+            input(name="password" type="password" class="form-control input-lg" placeholder="请输入密码" ng-model="user_password" required)
+            br
+            br
+            .alert.alert-danger.alertCenter(ng-show='display')  帐号或密码不正确
+            button.btn.btn-primary.btn-lg.btn-block.phonelogin(ng-click="login()") 登录

@@ -1,5 +1,6 @@
 #encoding:utf-8
 class UsersController < ApplicationController
+  protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format == 'application/json' }
   def welcome
   end
 
@@ -165,6 +166,17 @@ class UsersController < ApplicationController
           flash[:error]="两次密码输入不一致，请重新输入"
           render :forget_three
         end
+      end
+    end
+  end
+
+  def get_http_user_log
+    user=User.find_by_name(params[:name])
+    respond_to do |format|
+      if user && user.authenticate(params[:password])
+        format.json { render json: {data: 'true'} }
+      else
+        format.json { render json: {data: 'false'} }
       end
     end
   end

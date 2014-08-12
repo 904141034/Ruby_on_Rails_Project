@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   post '/next_two',to:'users#next_two'
   get '/forget_three',to:'users#forget_three', :as => 'forget_three'
   post '/next_three',to:'users#next_three'
+  post '/get_http_user_log',to:'users#get_http_user_log'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
