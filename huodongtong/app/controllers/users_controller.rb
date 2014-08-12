@@ -25,7 +25,7 @@ class UsersController < ApplicationController
         end
       end
     else
-      flash[:error]="用户名或密码错误"
+      flash[:error]="用户不存在或密码错误"
       redirect_to :root
     end
   end
@@ -74,9 +74,9 @@ class UsersController < ApplicationController
       user=User.where(:role => 'Ordinary_user')
       @user=user.paginate(page: params[:page], per_page: 10)
       if params[:page].to_i==0
-        @us=1
+        @page_index=1
       else
-        @us=params[:page].to_i
+        @page_index=params[:page].to_i
       end
     else
       redirect_to :root

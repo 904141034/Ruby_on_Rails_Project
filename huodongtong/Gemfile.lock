@@ -31,6 +31,8 @@ GEM
     bcrypt (3.1.7)
     bootstrap-sass (2.3.2.0)
       sass (~> 3.2)
+    bootstrap-will_paginate (0.0.10)
+      will_paginate
     builder (3.2.2)
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
@@ -149,8 +151,6 @@ GEM
       execjs (>= 0.3.0)
       multi_json (~> 1.0, >= 1.0.2)
     will_paginate (3.0.7)
-    will_paginate-bootstrap (1.0.1)
-      will_paginate (>= 3.0.3)
     yaml_db (0.2.3)
 
 PLATFORMS
@@ -159,6 +159,7 @@ PLATFORMS
 DEPENDENCIES
   bcrypt (= 3.1.7)
   bootstrap-sass (= 2.3.2.0)
+  bootstrap-will_paginate
   coffee-rails (= 4.0.1)
   haml
   i18n
@@ -175,5 +176,4 @@ DEPENDENCIES
   turbolinks (= 1.1.1)
   uglifier (= 2.1.1)
   will_paginate (= 3.0.7)
-  will_paginate-bootstrap
   yaml_db
