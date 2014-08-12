@@ -1,6 +1,7 @@
 #encoding:utf-8
 class UsersController < ApplicationController
   protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format == 'application/json' }
+
   def welcome
   end
 
@@ -84,15 +85,24 @@ class UsersController < ApplicationController
   end
 
   def add_user
-    @user=User.new
+    if current_user
+      @user=User.new
+    else
+      redirect_to :root
+    end
   end
 
-  def delete_user
+def delete_user
+  if current_user
     User.find_by_name(params[:name]).delete
     redirect_to :manager_index
+  else
+    redirect_to :root
   end
+end
 
-  def change_password_action
+def change_password_action
+
     user=User.find_by_name(session[:name])
     if params[:password]==params[:password_confirmation]
       user.password=params[:password]
@@ -105,13 +115,18 @@ class UsersController < ApplicationController
       flash[:error]="两次密码输入不一致，请重新输入！"
       render :change_password
     end
-  end
 
-  def change_password
+end
+
+def change_password
+  if current_user
     if session[:name]==''
       session[:name]=params[:name]
     end
+  else
+    redirect_to :root
   end
+end
 
   def forget_one
 
@@ -159,7 +174,12 @@ class UsersController < ApplicationController
       user.password_confirmation=params[:password_confirmation]
       if user.save
         cookies.permanent[:token]=user.token
-        redirect_to :welcome
+        if current_user.role=="admin"
+          redirect_to :manager_index
+        else
+          redirect_to :welcome
+        end
+
       end
     else
       if params[:password]==""||params[:password_confirmation]==""
