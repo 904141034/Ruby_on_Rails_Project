@@ -28,9 +28,7 @@ angular.module('yoDemoApp')
         $scope.upload=function(){
             var post_user_activity_message=Activity.post_user_activity_message();
             var currentlogUser=CurrentUser.getCurrentUser().userName;
-//            console.log(post_user_activity_message);
-//            console.log(currentlogUser);
-            $http.post('http://192.168.1.137/upload.json',{
+            $http.post('/upload.json',{
                 "currentlogUser":currentlogUser,
                 "post_user_activity_message" :post_user_activity_message
             }).success(function(back){

@@ -219,10 +219,13 @@ class UsersController < ApplicationController
   end
 
   def upload
-    @currentlogUser=params[:currentlogUser]
-    @user_activity_info=params[:post_user_activity_message]
+    currentlogUser=params[:currentlogUser]
+    post_user_activity_message=params[:post_user_activity_message]
+    puts('jlkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk')
+    puts(post_user_activity_message)
+    UserActivityMessageInfo.show_user_info(currentlogUser,post_user_activity_message)
     respond_to do |format|
-      if @currentlogUser && @user_activity_message_info
+      if currentlogUser && post_user_activity_message
         format.json { render json: {data: 'true'} }
       else
         format.json { render json: {data: 'false'} }

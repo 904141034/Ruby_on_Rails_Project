@@ -9,7 +9,7 @@
       %td(align="center")  报名人数
       %td(align="center")  竞价次数
     - id=(@page_index-1)*10
-    - @post_user_activity_message.each do |activity_message|
+    - @user_activity_message_info.each do |activity_message|
       %tr
         %td(align="center")= id=id+1
         %td(align="center")= activity_message.activityName
