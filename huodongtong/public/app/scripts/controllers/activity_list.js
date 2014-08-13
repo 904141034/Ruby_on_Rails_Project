@@ -3,7 +3,7 @@
  * Created by lishaodan on 14-7-9.
  */
 angular.module('yoDemoApp')
-    .controller('activity_listCtrl', function ($scope,$location) {
+    .controller('activity_listCtrl', function ($scope,$location,$http) {
         $scope.awesomeThings = [
             'HTML5 Boilerplate',
             'AngularJS',
@@ -24,6 +24,12 @@ angular.module('yoDemoApp')
             //活动名传值
             Activity.activity_register(name);
             $location.path('/activity_register');
+        };
+        $scope.upload=function(){
+            $http.post('http://192.168.1.137/upload.json',{
+                "currentlogUser":localStorage.currentlogUser.userName,
+                "post_user_activity_message":Activity.post_user_activity_message()
+            });
         }
 
     });

@@ -7,7 +7,7 @@ var native_accessor = {
     },
 
     receive_message: function (json_message) {
-        console.log(json_message);
+
         if (typeof this.process_received_message === 'function') {
             this.process_received_message(json_message);
 
@@ -15,9 +15,15 @@ var native_accessor = {
     },
 
     process_received_message: function (json_message) {
+        var bm=myModule.handlebmhead(json_message);
+        var jj=myModule.handlejjhead(json_message);
+        if(bm==0) {
+            myModule.handleBM(json_message);
+        }
+        if(jj==0){
+            myModule.handleJJ(json_message);
+        }
 
-        myModule.handleBM(json_message);
-        myModule.handleJJ(json_message);
     }
 
 };

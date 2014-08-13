@@ -11,15 +11,27 @@ var myModule = {
             myModule.sendbmMessage(return_namePhone);
         }
     },
+    handlebmhead:function(json_message){
+        var mess = json_message.messages[0].message;
+        var message = mess.replace(/\s/g, "");
+        var bm = message.search(/bm/i);
+        return bm;
+    },
+    handlejjhead:function(json_message){
+        var mess = json_message.messages[0].message;
+        var message = mess.replace(/\s/g, "");
+        var jj = message.search(/jj/i);
+        return jj;
+    },
     handlebmMessage: function (json_message) {
         //去空格并判断bm
         var mess = json_message.messages[0].message;
         var message = mess.replace(/\s/g, "");
         var bb = message.search(/bm/i);
+        var get_name = message.substr(2);
+        var get_phone = json_message.messages[0].phone;
         var namePhone={};
         if(bb!=(-1)){
-            var get_name = message.substr(2);
-            var get_phone = json_message.messages[0].phone;
             bb==0 ? namePhone=BmMessage.bYes1(get_name,get_phone):namePhone={};
         }
         return namePhone;
@@ -42,10 +54,7 @@ var myModule = {
         }
     },
     handleJJ:function(json_message){
-        var bid_message=myModule.handleJJMessage(json_message);
-        var return_bid_message= BmMessage.bYes(bid_message);
-        myModule.sendbmMessage(return_bid_message);
-
+            myModule.handleJJMessage(json_message);
     },
     handleJJMessage: function (json_message) {
         //去空格并判断bm

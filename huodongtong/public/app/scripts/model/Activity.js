@@ -21,7 +21,14 @@ Activity.getActivities=function(){
     var currentUser=CurrentUser.getCurrentUser();
     var activitiesAll=Activity.getallActivities();
     var activities= _.filter(activitiesAll,function(activity){return activity.userName==currentUser.userName});
+    Activity.setCurrentUser_activities(activities);
     return activities;
+};
+Activity.setCurrentUser_activities=function(activities){
+    localStorage.setItem('current_user_activities',JSON.stringify(activities)) ;
+};
+Activity.getCurrentUser_activities=function(){
+    return JSON.parse(localStorage.getItem("current_user_activities"))||[];
 };
 Activity.setActivities=function(activities){
      localStorage.setItem('activities',JSON.stringify(activities)) ;
@@ -132,7 +139,15 @@ Activity.bidLength=function(){
     var innerAct=JSON.parse(localStorage.getItem("innerAct"))||{};
     var bidlists=_.findWhere(activities,{name:innerAct.name}).bidlists;
     return bidlists.length;
-}
+};
+Activity.post_user_activity_message=function(){
+    var user_activities=Activity.getCurrentUser_activities();
+    var current_user_activity_messages=[];
+//    for(var i in user_activities){
+//        var activity_message={"userName":user_activities[i].userName,"activityName":user_activities[i].name,
+//            "bmNo":user_activities[i].bmMessages.length,"bidNo":user_activities[i]}
+//    }
+};
 
 
 
