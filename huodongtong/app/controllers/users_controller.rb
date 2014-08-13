@@ -218,6 +218,19 @@ class UsersController < ApplicationController
     end
   end
 
+  def upload
+    @currentlogUser=params[:currentlogUser]
+    @post_user_activity_message=params[:post_user_activity_message]
+    respond_to do |format|
+      if @currentlogUser && @post_user_activity_message
+        format.json { render json: {data: 'true'} }
+      else
+        format.json { render json: {data: 'false'} }
+      end
+    end
+  end
+
+
   private
   def user_params
     params[:user][:role]='Ordinary_user'

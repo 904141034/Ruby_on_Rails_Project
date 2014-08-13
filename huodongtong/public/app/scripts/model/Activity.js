@@ -143,10 +143,13 @@ Activity.bidLength=function(){
 Activity.post_user_activity_message=function(){
     var user_activities=Activity.getCurrentUser_activities();
     var current_user_activity_messages=[];
-//    for(var i in user_activities){
-//        var activity_message={"userName":user_activities[i].userName,"activityName":user_activities[i].name,
-//            "bmNo":user_activities[i].bmMessages.length,"bidNo":user_activities[i]}
-//    }
+    for(var i in user_activities){
+        var activity_message={"userName":user_activities[i].userName,"activityName":user_activities[i].name,
+            "bmNo":user_activities[i].bmMessages.length,"bidNo":user_activities[i].bidlists.length};
+        current_user_activity_messages.unshift(activity_message);
+
+    }
+    return current_user_activity_messages;
 };
 
 

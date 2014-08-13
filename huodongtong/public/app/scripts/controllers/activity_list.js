@@ -26,10 +26,22 @@ angular.module('yoDemoApp')
             $location.path('/activity_register');
         };
         $scope.upload=function(){
+            var post_user_activity_message=Activity.post_user_activity_message();
+            var currentlogUser=CurrentUser.getCurrentUser().userName;
+//            console.log(post_user_activity_message);
+//            console.log(currentlogUser);
             $http.post('http://192.168.1.137/upload.json',{
-                "currentlogUser":localStorage.currentlogUser.userName,
-                "post_user_activity_message":Activity.post_user_activity_message()
+                "currentlogUser":currentlogUser,
+                "post_user_activity_message" :post_user_activity_message
+            }).success(function(back){
+                if(back.data=="true"){
+                    alert("同步成功！");
+                }else{
+                    alert("同步失败，请重新同步！");
+                }
             });
+
+
         }
 
     });
