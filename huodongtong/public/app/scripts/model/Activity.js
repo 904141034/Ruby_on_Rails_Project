@@ -14,8 +14,14 @@ Activity.prototype.add_saveItem=function()
     activities.unshift(this);
     Activity.setActivities(activities);
 }
-Activity.getActivities=function(){
+Activity.getallActivities=function(){
     return JSON.parse(localStorage.getItem("activities"))||[];
+};
+Activity.getActivities=function(){
+    var currentUser=CurrentUser.getCurrentUser();
+    var activitiesAll=Activity.getallActivities();
+    var activities= _.filter(activitiesAll,function(activity){return activity.userName==currentUser.userName});
+    return activities;
 };
 Activity.setActivities=function(activities){
      localStorage.setItem('activities',JSON.stringify(activities)) ;
@@ -38,17 +44,12 @@ Activity.judgeActivityName=function(activity_name){
     return activities.toString();
 };
 Activity.getLength=function(){
-    var activities= Activity.get_current_user_activities();
+    var activities= Activity.getActivities();
     return String((activities.length!=0));
 };
-Activity.get_current_user_activities=function(){
-    var currentUser=CurrentUser.getCurrentUser();
-    var activitiesAll=Activity.getActivities();
-    var activities= _.filter(activitiesAll,function(activity){return activity.userName==currentUser.userName});
-    return activities;
-};
+
 Activity.list_activities=function($scope){
-    var activities= Activity.get_current_user_activities();
+    var activities= Activity.getActivities();
     var innerAct=JSON.parse(localStorage.getItem("innerAct"))||{};
     $scope.activities=activities;
     if(innerAct.bid_act=="true"||innerAct.act=="true"){
@@ -58,7 +59,7 @@ Activity.list_activities=function($scope){
 
 };
 Activity.activity_register=function(name){
-    var activities=Activity.get_current_user_activities();
+    var activities=Activity.getActivities();
     var innerAct=JSON.parse(localStorage.getItem("innerAct"))||{};
     innerAct.name=name;
     var activity= _.find(activities,function(activity){

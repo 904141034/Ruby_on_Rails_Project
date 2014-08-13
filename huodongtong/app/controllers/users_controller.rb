@@ -11,10 +11,19 @@ class UsersController < ApplicationController
 
   def login
     create_admin
+    if current_user
+      if current_user.role=="admin"
+        redirect_to :manager_index
+      else
+        if current_user.role=="Ordinary_user"
+          redirect_to :welcome
+        end
+
+      end
+    end
   end
 
   def create_login_session
-    flash[:error].display
     user=User.find_by_name(params[:name])
     if user && user.authenticate(params[:password])
       cookies.permanent[:token]=user.token
@@ -92,41 +101,45 @@ class UsersController < ApplicationController
     end
   end
 
-def delete_user
-  if current_user
-    User.find_by_name(params[:name]).delete
-    redirect_to :manager_index
-  else
-    redirect_to :root
+  def delete_user
+    if current_user
+      User.find_by_name(params[:name]).delete
+      redirect_to :manager_index
+    else
+      redirect_to :root
+    end
   end
-end
 
-def change_password_action
-
+  def change_password_action
+    session[:result]=""
     user=User.find_by_name(session[:name])
-    if params[:password]==params[:password_confirmation]
+    if params[:password]==params[:password_confirmation] && params[:password]!=""
       user.password=params[:password]
       user.password_confirmation=params[:password_confirmation]
       user.save
       @result='success'
       session[:result]= @result
+      flash[:error].display
       redirect_to :change_password
     else
-      flash[:error]="两次密码输入不一致，请重新输入！"
-      render :change_password
+      if params[:password]==""|| params[:password_confirmation]==""
+        flash[:error]="密码或确认密码不能为空！"
+        render :change_password
+      else
+        flash[:error]="两次密码输入不一致，请重新输入！"
+        render :change_password
+      end
     end
 
-end
-
-def change_password
-  if current_user
-    if session[:name]==''
-      session[:name]=params[:name]
-    end
-  else
-    redirect_to :root
   end
-end
+
+  def change_password
+    if current_user
+      session[:name]=params[:name]
+    else
+      redirect_to :root
+    end
+  end
 
   def forget_one
 
@@ -142,10 +155,10 @@ end
     else
       if params[:name]==""
         flash[:error]="帐号不能为空"
-        render :forget_one
+        redirect_to :forget_one
       else
         flash[:error]="该帐号不存在"
-        render :forget_one
+        redirect_to :forget_one
       end
     end
   end
