@@ -28,7 +28,7 @@ class UsersController < ApplicationController
     if user && user.authenticate(params[:password])
       cookies.permanent[:token]=user.token
       if user.role=='Ordinary_user'
-        redirect_to :welcome
+        redirect_to :user_index
       else
         if user.role=='admin'
           redirect_to :manager_index
@@ -220,16 +220,23 @@ class UsersController < ApplicationController
 
   def upload
     @currentlogUser=params[:currentlogUser]
-    @post_user_activity_message=params[:post_user_activity_message]
+    @user_activity_info=params[:post_user_activity_message]
     respond_to do |format|
-      if @currentlogUser && @post_user_activity_message
+      if @currentlogUser && @user_activity_message_info
         format.json { render json: {data: 'true'} }
       else
         format.json { render json: {data: 'false'} }
       end
     end
   end
-
+def user_index
+  # @post_user_activity_message=@post_user_activity_message.paginate(page: params[:page], per_page: 10)
+  # if params[:page].to_i==0
+  #   @page_index=1
+  # else
+  #   @page_index=params[:page].to_i
+  # end
+end
 
   private
   def user_params

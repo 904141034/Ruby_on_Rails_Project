@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   post '/next_three',to:'users#next_three'
   post '/get_http_user_log',to:'users#get_http_user_log'
   post'/upload',to:'users#upload'
+  get '/user_index',to:'users#user_index',:as=>'user_index'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

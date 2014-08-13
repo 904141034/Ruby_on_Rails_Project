@@ -1,0 +1,19 @@
+.single-form-container
+  .well.well-lg.panel_heading
+    .manager-index-header
+      活动信息
+  %table.table.panel-first-row.table-bordered
+    %tr
+      %td(align="center")  编号
+      %td(align="center")  活动名称
+      %td(align="center")  报名人数
+      %td(align="center")  竞价次数
+    - id=(@page_index-1)*10
+    - @post_user_activity_message.each do |activity_message|
+      %tr
+        %td(align="center")= id=id+1
+        %td(align="center")= activity_message.activityName
+        %td(align="center")= activity_message.bmNo
+        %td(align="center")= activity_message.bidNo
+  .paginate.pagestyle
+    = will_paginate @post_user_activity_message, :previous_label=>'<<',:next_label=>'>>'
