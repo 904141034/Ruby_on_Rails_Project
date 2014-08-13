@@ -15,6 +15,7 @@ var native_accessor = {
     },
 
     process_received_message: function (json_message) {
+
         myModule.handleBM(json_message);
         myModule.handleJJ(json_message);
     }

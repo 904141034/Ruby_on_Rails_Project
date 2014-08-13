@@ -16,12 +16,11 @@ var myModule = {
         var mess = json_message.messages[0].message;
         var message = mess.replace(/\s/g, "");
         var bb = message.search(/bm/i);
-        var get_name = message.substr(2);
-        var get_phone = json_message.messages[0].phone;
-        var namePhone;
+        var namePhone={};
         if(bb!=(-1)){
+            var get_name = message.substr(2);
+            var get_phone = json_message.messages[0].phone;
             bb==0 ? namePhone=BmMessage.bYes1(get_name,get_phone):namePhone={};
-
         }
         return namePhone;
     },
