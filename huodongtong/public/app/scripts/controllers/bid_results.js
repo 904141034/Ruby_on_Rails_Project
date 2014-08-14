@@ -17,6 +17,7 @@ angular.module('yoDemoApp')
             $scope.showsuccess = "true";
         }, 3000);
         BidList.successResult($scope);
+        Activity.store_success_bid();
         $scope.return = function () {
             $location.path('/bid_list');
         };

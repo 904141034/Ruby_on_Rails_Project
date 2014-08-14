@@ -13,25 +13,26 @@ Activity.prototype.add_saveItem=function()
     var activities=Activity.getActivities();
     activities.unshift(this);
     Activity.setActivities(activities);
-}
-Activity.getallActivities=function(){
-    return JSON.parse(localStorage.getItem("activities"))||[];
+
 };
 Activity.getActivities=function(){
-    var currentUser=CurrentUser.getCurrentUser();
-    var activitiesAll=Activity.getallActivities();
-    var activities= _.filter(activitiesAll,function(activity){return activity.userName==currentUser.userName});
-    Activity.setCurrentUser_activities(activities);
-    return activities;
+    return JSON.parse(localStorage.getItem("activities"))||[];
 };
-Activity.setCurrentUser_activities=function(activities){
-    localStorage.setItem('current_user_activities',JSON.stringify(activities)) ;
+Activity.setActivities=function(activities){
+    localStorage.setItem('activities',JSON.stringify(activities)) ;
+    Activity.store_current_user_activities();
+};
+Activity.store_current_user_activities=function(){
+    var currentUser=CurrentUser.getCurrentUser();
+    var activitiesAll=Activity.getActivities();
+    var current_activities= _.filter(activitiesAll,function(activity){return activity.userName==currentUser.userName});
+    Activity.setCurrentUser_activities(current_activities);
+};
+Activity.setCurrentUser_activities=function(current_activities){
+    localStorage.setItem('current_user_activities',JSON.stringify(current_activities)) ;
 };
 Activity.getCurrentUser_activities=function(){
     return JSON.parse(localStorage.getItem("current_user_activities"))||[];
-};
-Activity.setActivities=function(activities){
-     localStorage.setItem('activities',JSON.stringify(activities)) ;
 };
 Activity.isRename=function(activity_name){
 
@@ -51,12 +52,12 @@ Activity.judgeActivityName=function(activity_name){
     return activities.toString();
 };
 Activity.getLength=function(){
-    var activities= Activity.getActivities();
+    var activities= Activity.getCurrentUser_activities();
     return String((activities.length!=0));
 };
 
 Activity.list_activities=function($scope){
-    var activities= Activity.getActivities();
+    var activities= Activity.getCurrentUser_activities();
     var innerAct=JSON.parse(localStorage.getItem("innerAct"))||{};
     $scope.activities=activities;
     if(innerAct.bid_act=="true"||innerAct.act=="true"){
@@ -149,6 +150,16 @@ Activity.post_user_activity_message=function(){
         current_user_activity_messages.unshift(activity_message);
     }
     return current_user_activity_messages;
+};
+Activity.store_success_bid=function(){
+   var bid_success=BidList.getBidSuccess();
+   var certain_bid=BidList.getCertainBid();
+   var current_user_name=CurrentUser.getCurrentUserName;
+   var activity_name=InnerAct.getInnerAct().name;
+   var bid_name=InnerAct.getInnerAct().bid_name;
+
+
+
 };
 
 

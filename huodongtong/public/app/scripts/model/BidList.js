@@ -5,6 +5,7 @@ function BidList(bid_name,status,bidMessages){
     this.bid_name = bid_name;
     this.status=status;
     this.bidMessages=bidMessages;
+    this.bid_success={};
 }
 BidList.prototype.add_saveItem=function(){
     var activities=Activity.getActivities();

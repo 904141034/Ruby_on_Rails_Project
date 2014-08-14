@@ -15,6 +15,7 @@ angular.module('yoDemoApp')
                 if(back.data=="true"){
                     var currentlogUser=new CurrentUser($scope.user_name);
                     CurrentUser.setCurrentUser(currentlogUser);
+                    Activity.store_current_user_activities();
                     $location.path('activity_list');
                 }else{
                     $scope.display = true
