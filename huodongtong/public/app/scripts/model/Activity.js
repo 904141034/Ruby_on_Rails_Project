@@ -16,7 +16,8 @@ Activity.prototype.add_saveItem=function()
 
 };
 Activity.getActivities=function(){
-    return JSON.parse(localStorage.getItem("activities"))||[];
+    var activities=JSON.parse(localStorage.getItem("activities"))||[];
+    return activities;
 };
 Activity.setActivities=function(activities){
     localStorage.setItem('activities',JSON.stringify(activities)) ;
@@ -151,16 +152,7 @@ Activity.post_user_activity_message=function(){
     }
     return current_user_activity_messages;
 };
-Activity.store_success_bid=function(){
-   var bid_success=BidList.getBidSuccess();
-   var certain_bid=BidList.getCertainBid();
-   var current_user_name=CurrentUser.getCurrentUserName;
-   var activity_name=InnerAct.getInnerAct().name;
-   var bid_name=InnerAct.getInnerAct().bid_name;
 
-
-
-};
 
 
 

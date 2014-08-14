@@ -17,11 +17,13 @@ angular.module('yoDemoApp')
             $scope.showsuccess = "true";
         }, 3000);
         BidList.successResult($scope);
-        Activity.store_success_bid();
+
         $scope.return = function () {
             $location.path('/bid_list');
         };
         $scope.bid_name = InnerAct.getInnerAct().bid_name;
         $scope.bidMessageNO = BidList.getSortByPrice().length;
         $scope.bidMessages = BidList.getSortByPrice();
+        BidList.get_bid_detail();
+        BidList.get_bid_success();
     });

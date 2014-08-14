@@ -5,7 +5,6 @@ function BidList(bid_name,status,bidMessages){
     this.bid_name = bid_name;
     this.status=status;
     this.bidMessages=bidMessages;
-    this.bid_success={};
 }
 BidList.prototype.add_saveItem=function(){
     var activities=Activity.getActivities();
@@ -101,6 +100,7 @@ BidList.successResult=function($scope){
     var bid_success = JSON.parse(localStorage.getItem("bid_success")) || {};
     var bid_successphone = bid_success.phone_number.substr(0, 3);
     bid_success.person_name == "" ? BidList.successNo($scope):BidList.successYes(bid_success,$scope,bid_successphone);
+
 };
 BidList.successNo=function($scope){
     $scope.bid_success = "竞价失败！";
@@ -128,7 +128,7 @@ BidList.judeBidSuccess=function($scope){
    bid_success.person_name==""? $scope.bid_success="竞价失败！": $scope.bid_success = bid_success.person_name + " " + "￥" + bid_success.bid_price + "  " + bid_success.phone_number;
 };
 BidList.post_bid_message=function(){
-    var activities=Activity.getActivities();
+    var activities=Activity.getCurrentUser_activities();
     var bid_list_infos=[];
     for(var i in activities){
         var username=activities[i].userName;
@@ -145,4 +145,49 @@ BidList.post_bid_message=function(){
 
     }
     return bid_list_infos;
+};
+BidList.get_bid_detail=function(){
+    var bid_details=JSON.parse(localStorage.getItem("bid_details"))||[];
+    var current_user=CurrentUser.getCurrentUserName();
+    var activity_name=InnerAct.getInnerAct().name;
+    var bid_name=InnerAct.getInnerAct().bid_name;
+    var current_user_activities=Activity.getCurrentUser_activities();
+    var bidlists= _.findWhere(current_user_activities,{"userName":current_user,"name":activity_name}).bidlists;
+    var bidmessages=_.findWhere(bidlists,{"bid_name":bid_name}).bidMessages;
+    for(var i=0;i<bidmessages.length;i++){
+        var bid_detail={};
+        bid_detail.username=current_user;
+        bid_detail.activity_name=activity_name;
+        bid_detail.bid_name=bid_name;
+        bid_detail.person_name=bidmessages[i].person_name;
+        bid_detail.bid_price=bidmessages[i].bid_price;
+        bid_detail.phone_number=bidmessages[i].phone_number;
+        var result= _.findWhere(bid_details,{"username":current_user,"activity_name":activity_name,"bid_name":bid_name,"person_name":bid_detail.person_name});
+       if(typeof(result)=="undefined"){
+           bid_details.unshift(bid_detail);
+       }
+
+    }
+    console.log(bid_details);
+    localStorage.setItem('bid_details',JSON.stringify(bid_details)) ;
+};
+BidList.get_bid_success=function(){
+    var bid_success_details=JSON.parse(localStorage.getItem("bid_success_details"))||[];
+    var bid_success_detail={};
+    var current_user=CurrentUser.getCurrentUserName();
+    var activity_name=InnerAct.getInnerAct().name;
+    var bid_name=InnerAct.getInnerAct().bid_name;
+    bid_success_detail.username=current_user;
+    bid_success_detail.activity_name=activity_name;
+    bid_success_detail.bid_name=bid_name;
+    var success=JSON.parse(localStorage.getItem("bid_success"))||{};
+    bid_success_detail.person_name=success.person_name;
+    bid_success_detail.success_price=success.bid_price;
+    bid_success_detail.phone_number=success.phone_number;
+    var result= _.findWhere(bid_success_details,{"username":current_user,"activity_name":activity_name,"bid_name":bid_name});
+    if(typeof(result)=="undefined"){
+        bid_success_details.unshift(bid_success_detail);
+    }
+    console.log(bid_success_details);
+    localStorage.setItem('bid_success_details',JSON.stringify(bid_success_details))
 };
