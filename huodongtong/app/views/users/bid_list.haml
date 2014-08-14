@@ -6,7 +6,7 @@
   .well.well-lg.panel_heading
     .manager-index-header
       竞价列表 &nbsp&nbsp&nbsp
-      .baominglinkstyle= link_to "报名列表"
+      .baominglinkstyle= link_to "报名列表",baoming_path(:activity_name=>session[:activity_name])
   %table.table.panel-first-row.table-bordered
     %tr
       %td(align="center")  编号

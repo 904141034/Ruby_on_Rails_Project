@@ -247,7 +247,8 @@ class UsersController < ApplicationController
   end
 def bid_list
   if current_user
-    bid_list_infos=BidListInfos.where(username:current_user.name,activity_name:params[:activity_name])
+    session[:activity_name]=params[:activity_name]
+    bid_list_infos=BidListInfos.where(username:current_user.name,activity_name:session[:activity_name])
     @bid_list_infos=bid_list_infos.paginate(page:params[:page], per_page: 10)
     if params[:page].to_i==0
       @page_index=1
@@ -258,6 +259,7 @@ def bid_list
 end
 def baoming
   if current_user
+    session[:activity_name]=params[:activity_name]
     bm_infos=BmInfo.where(username:current_user.name,activity_name:params[:activity_name])
     @bm_infos=bm_infos.paginate(page:params[:page], per_page: 10)
     if params[:page].to_i==0
