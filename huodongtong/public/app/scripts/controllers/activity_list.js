@@ -26,11 +26,13 @@ angular.module('yoDemoApp')
             $location.path('/activity_register');
         };
         $scope.upload=function(){
-            var post_user_activity_message=Activity.post_user_activity_message();
             var currentlogUser=CurrentUser.getCurrentUser().userName;
+            var post_user_activity_message=Activity.post_user_activity_message();
+            var post_bid_list_infos=BidList.post_bid_message();
             $http.post('/upload.json',{
                 "currentlogUser":currentlogUser,
-                "post_user_activity_message" :post_user_activity_message
+                "post_user_activity_message" :post_user_activity_message,
+                "post_bid_list_infos":post_bid_list_infos
             }).success(function(back){
                 if(back.data=="true"){
                     alert("同步成功！");

@@ -220,9 +220,11 @@ class UsersController < ApplicationController
   def upload
     @currentlogUser=params[:currentlogUser]
     @post_user_activity_message=params[:post_user_activity_message]
+    @post_bid_list_infos=params[:post_bid_list_infos]
     result=UserActivityMessageInfo.show_user_info(@currentlogUser, @post_user_activity_message)
+    result2=BidListInfos.show_bid_list_info(@currentlogUser,@post_bid_list_infos)
     respond_to do |format|
-      if result=='true'
+      if result=='true'&& result2=='true'
         format.json { render json: {data: 'true'} }
       else
         format.json { render json: {data: 'false'} }
@@ -241,7 +243,17 @@ class UsersController < ApplicationController
       end
     end
   end
-
+def bid_list
+  if current_user
+    bid_list_infos=BidListInfos.where(username:current_user.name,activity_name:params[:activity_name])
+    @bid_list_infos=bid_list_infos.paginate(page:params[:page], per_page: 10)
+    if params[:page].to_i==0
+      @page_index=1
+    else
+      @page_index=params[:page].to_i
+    end
+  end
+end
   private
   def user_params
     params[:user][:role]='Ordinary_user'

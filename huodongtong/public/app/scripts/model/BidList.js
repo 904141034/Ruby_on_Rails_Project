@@ -126,3 +126,21 @@ BidList.judeBidSuccess=function($scope){
    var bid_success= BidList.getBidSuccess();
    bid_success.person_name==""? $scope.bid_success="竞价失败！": $scope.bid_success = bid_success.person_name + " " + "￥" + bid_success.bid_price + "  " + bid_success.phone_number;
 };
+BidList.post_bid_message=function(){
+    var activities=Activity.getActivities();
+    var bid_list_infos=[];
+    for(var i in activities){
+        var username=activities[i].userName;
+        var activity_name=activities[i].name;
+        var bm_no=activities[i].bmMessages.length;
+        for(var j in activities[i].bidlists){
+            var bid_name=activities[i].bidlists[j].bid_name;
+            var bid_message_no=activities[i].bidlists[j].bidMessages.length;
+            var bid_list_info={"username":username,"activity_name":activity_name,
+                "bm_no":bm_no.toString(),"bid_name":bid_name,"bid_message_no":bid_message_no.toString()};
+            bid_list_infos.unshift(bid_list_info);
+        }
+
+    }
+    return bid_list_infos;
+};

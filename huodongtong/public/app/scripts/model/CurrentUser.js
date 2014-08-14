@@ -10,3 +10,7 @@ CurrentUser.getCurrentUser=function(){
 CurrentUser.setCurrentUser=function(currentlogUser){
     localStorage.setItem('currentlogUser',JSON.stringify(currentlogUser)) ;
 };
+CurrentUser.getCurrentUserName=function(){
+    var current_user_name=CurrentUser.getCurrentUser().userName;
+    return current_user_name;
+};

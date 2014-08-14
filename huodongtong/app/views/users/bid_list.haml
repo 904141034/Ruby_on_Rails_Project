@@ -6,4 +6,17 @@
   .well.well-lg.panel_heading
     .manager-index-header
       竞价列表 &nbsp&nbsp&nbsp
-      = link_to "报名列表"
+      .baominglinkstyle= link_to "报名列表"
+  %table.table.panel-first-row.table-bordered
+    %tr
+      %td(align="center")  编号
+      %td(align="center")  名称
+      %td(align="center")  参与人数
+    - id=(@page_index-1)*10
+    - @bid_list_infos.each do |bid_list_info|
+      %tr
+        %td(align="center")= id=id+1
+        %td(align="center")= link_to bid_list_info.bid_name
+        %td(align="center")= link_to bid_list_info.bid_message_no+"/"+bid_list_info.bm_no
+  .paginate.pagestyle
+    = will_paginate @bid_list_infos, :previous_label=>'<<',:next_label=>'>>'
