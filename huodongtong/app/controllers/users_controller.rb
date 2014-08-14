@@ -221,10 +221,12 @@ class UsersController < ApplicationController
     @currentlogUser=params[:currentlogUser]
     @post_user_activity_message=params[:post_user_activity_message]
     @post_bid_list_infos=params[:post_bid_list_infos]
-    result=UserActivityMessageInfo.show_user_info(@currentlogUser, @post_user_activity_message)
+    @post_bm_infos=params[:post_bm_infos]
+    result1=UserActivityMessageInfo.show_user_info(@currentlogUser, @post_user_activity_message)
     result2=BidListInfos.show_bid_list_info(@currentlogUser,@post_bid_list_infos)
+    result3=BmInfo.show_bm_infos(@currentlogUser,@post_bm_infos)
     respond_to do |format|
-      if result=='true'&& result2=='true'
+      if result1=='true'&& result2=='true'&& result3=='true'
         format.json { render json: {data: 'true'} }
       else
         format.json { render json: {data: 'false'} }
@@ -247,6 +249,17 @@ def bid_list
   if current_user
     bid_list_infos=BidListInfos.where(username:current_user.name,activity_name:params[:activity_name])
     @bid_list_infos=bid_list_infos.paginate(page:params[:page], per_page: 10)
+    if params[:page].to_i==0
+      @page_index=1
+    else
+      @page_index=params[:page].to_i
+    end
+  end
+end
+def baoming
+  if current_user
+    bm_infos=BmInfo.where(username:current_user.name,activity_name:params[:activity_name])
+    @bm_infos=bm_infos.paginate(page:params[:page], per_page: 10)
     if params[:page].to_i==0
       @page_index=1
     else

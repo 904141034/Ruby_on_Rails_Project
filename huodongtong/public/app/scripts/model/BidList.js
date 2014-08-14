@@ -135,6 +135,7 @@ BidList.post_bid_message=function(){
         var bm_no=activities[i].bmMessages.length;
         for(var j in activities[i].bidlists){
             var bid_name=activities[i].bidlists[j].bid_name;
+
             var bid_message_no=activities[i].bidlists[j].bidMessages.length;
             var bid_list_info={"username":username,"activity_name":activity_name,
                 "bm_no":bm_no.toString(),"bid_name":bid_name,"bid_message_no":bid_message_no.toString()};

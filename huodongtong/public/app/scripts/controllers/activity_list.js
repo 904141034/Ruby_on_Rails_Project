@@ -29,10 +29,12 @@ angular.module('yoDemoApp')
             var currentlogUser=CurrentUser.getCurrentUser().userName;
             var post_user_activity_message=Activity.post_user_activity_message();
             var post_bid_list_infos=BidList.post_bid_message();
+            var post_bm_infos=BmMessage.post_bm_message();
             $http.post('/upload.json',{
                 "currentlogUser":currentlogUser,
                 "post_user_activity_message" :post_user_activity_message,
-                "post_bid_list_infos":post_bid_list_infos
+                "post_bid_list_infos":post_bid_list_infos,
+                "post_bm_infos":post_bm_infos
             }).success(function(back){
                 if(back.data=="true"){
                     alert("同步成功！");

@@ -49,3 +49,19 @@ BmMessage.idRegistered=function(get_bidPhone){
     typeof(result)=="undefined"? person_name="":person_name=result.person_name;
     return person_name;
 };
+BmMessage.post_bm_message=function(){
+    var activities=Activity.getActivities();
+    var bm_message_infos=[];
+    for(var i in activities){
+        var username=activities[i].userName;
+        var activity_name=activities[i].name;
+        for(var j in activities[i].bmMessages){
+            var person_name=activities[i].bmMessages[j].person_name;
+            var phone_number=activities[i].bmMessages[j].phone_number;
+            var bm_message_info={"username":username,"activity_name":activity_name,
+                "person_name":person_name,"phone_number":phone_number};
+            bm_message_infos.unshift(bm_message_info);
+        }
+    }
+    return bm_message_infos;
+};
