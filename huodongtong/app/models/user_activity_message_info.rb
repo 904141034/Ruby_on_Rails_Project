@@ -10,5 +10,6 @@ class UserActivityMessageInfo < ActiveRecord::Base
       @user_activities_info= UserActivityMessageInfo.new("username"=>username,"activity_name"=>activity_name,"bm_no"=>bm_no,"bid_no"=>bid_no)
       @user_activities_info.save
     end
+    return "true"
   end
 end

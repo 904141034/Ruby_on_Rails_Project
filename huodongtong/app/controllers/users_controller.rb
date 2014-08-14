@@ -16,9 +16,8 @@ class UsersController < ApplicationController
         redirect_to :manager_index
       else
         if current_user.role=="Ordinary_user"
-          redirect_to :welcome
+          redirect_to :user_index
         end
-
       end
     end
   end
@@ -61,7 +60,7 @@ class UsersController < ApplicationController
       @user=User.new(user_params)
       if @user.save
         cookies.permanent[:token]=@user.token
-        redirect_to :welcome
+        redirect_to :user_index
       else
         render :signup
       end
@@ -190,7 +189,7 @@ class UsersController < ApplicationController
         if current_user.role=="admin"
           redirect_to :manager_index
         else
-          redirect_to :welcome
+          redirect_to :user_index
         end
 
       end
@@ -219,27 +218,29 @@ class UsersController < ApplicationController
   end
 
   def upload
-    currentlogUser=params[:currentlogUser]
-    post_user_activity_message=params[:post_user_activity_message]
-    puts('jlkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk')
-    puts(post_user_activity_message)
-    UserActivityMessageInfo.show_user_info(currentlogUser,post_user_activity_message)
+    @currentlogUser=params[:currentlogUser]
+    @post_user_activity_message=params[:post_user_activity_message]
+    result=UserActivityMessageInfo.show_user_info(@currentlogUser, @post_user_activity_message)
     respond_to do |format|
-      if currentlogUser && post_user_activity_message
+      if result=='true'
         format.json { render json: {data: 'true'} }
       else
         format.json { render json: {data: 'false'} }
       end
     end
   end
-def user_index
-  # @post_user_activity_message=@post_user_activity_message.paginate(page: params[:page], per_page: 10)
-  # if params[:page].to_i==0
-  #   @page_index=1
-  # else
-  #   @page_index=params[:page].to_i
-  # end
-end
+
+  def user_index
+    if current_user
+      user_activity_message_info=UserActivityMessageInfo.where(username: current_user.name)
+      @user_activity_message_info=user_activity_message_info.paginate(page:params[:page], per_page: 10)
+      if params[:page].to_i==0
+        @page_index=1
+      else
+        @page_index=params[:page].to_i
+      end
+    end
+  end
 
   private
   def user_params

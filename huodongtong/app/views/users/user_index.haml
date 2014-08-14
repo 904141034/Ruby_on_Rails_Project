@@ -12,8 +12,8 @@
     - @user_activity_message_info.each do |activity_message|
       %tr
         %td(align="center")= id=id+1
-        %td(align="center")= activity_message.activityName
-        %td(align="center")= activity_message.bmNo
-        %td(align="center")= activity_message.bidNo
+        %td(align="center")= link_to activity_message.activity_name
+        %td(align="center")= link_to activity_message.bm_no
+        %td(align="center")= link_to activity_message.bid_no
   .paginate.pagestyle
-    = will_paginate @post_user_activity_message, :previous_label=>'<<',:next_label=>'>>'
+    = will_paginate @user_activity_message_info, :previous_label=>'<<',:next_label=>'>>'
