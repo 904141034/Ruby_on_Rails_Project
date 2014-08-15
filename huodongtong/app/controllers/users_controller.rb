@@ -224,13 +224,15 @@ class UsersController < ApplicationController
     @post_bm_infos=params[:post_bm_infos]
     @post_bid_details=params[:post_bid_details]
     @post_bid_success=params[:post_bid_success]
+    @post_bid_price_group=params[:post_bid_price_group]
     result1=UserActivityMessageInfo.show_user_info(@currentlogUser, @post_user_activity_message)
-    result2=BidListInfos.show_bid_list_info(@currentlogUser,@post_bid_list_infos)
-    result3=BmInfo.show_bm_infos(@currentlogUser,@post_bm_infos)
-    result4=BidDetail.show_bid_details(@currentlogUser,@post_bid_details)
-    result5=BidSuccessDetail.show_bid_success_details(@currentlogUser,@post_bid_success)
+    result2=BidListInfos.show_bid_list_info(@currentlogUser, @post_bid_list_infos)
+    result3=BmInfo.show_bm_infos(@currentlogUser, @post_bm_infos)
+    result4=BidDetail.show_bid_details(@currentlogUser, @post_bid_details)
+    result5=BidSuccessDetail.show_bid_success_details(@currentlogUser, @post_bid_success)
+    result6=BidPriceGroupDetail.show_bid_price_group_details(@currentlogUser,@post_bid_price_group)
     respond_to do |format|
-      if result1=='true'&& result2=='true'&& result3=='true'&&result4=='true'&& result5=="true"
+      if result1=='true'&& result2=='true'&& result3=='true'&&result4=='true'&& result5=="true" && result6=='true'
         format.json { render json: {data: 'true'} }
       else
         format.json { render json: {data: 'false'} }
@@ -241,7 +243,7 @@ class UsersController < ApplicationController
   def user_index
     if current_user
       user_activity_message_info=UserActivityMessageInfo.where(username: current_user.name)
-      @user_activity_message_info=user_activity_message_info.paginate(page:params[:page], per_page: 10)
+      @user_activity_message_info=user_activity_message_info.paginate(page: params[:page], per_page: 10)
       if params[:page].to_i==0
         @page_index=1
       else
@@ -249,45 +251,68 @@ class UsersController < ApplicationController
       end
     end
   end
-def bid_list
-  if current_user
-    session[:activity_name]=params[:activity_name]
-    bid_list_infos=BidListInfos.where(username:current_user.name,activity_name:session[:activity_name])
-    @bid_list_infos=bid_list_infos.paginate(page:params[:page], per_page: 10)
-    if params[:page].to_i==0
-      @page_index=1
-    else
-      @page_index=params[:page].to_i
+
+  def bid_list
+    if current_user
+      session[:activity_name]=params[:activity_name]
+      bid_list_infos=BidListInfos.where(username: current_user.name, activity_name: session[:activity_name])
+      @bid_list_infos=bid_list_infos.paginate(page: params[:page], per_page: 10)
+      if params[:page].to_i==0
+        @page_index=1
+      else
+        @page_index=params[:page].to_i
+      end
     end
   end
-end
-def baoming
-  if current_user
-    session[:activity_name]=params[:activity_name]
-    bm_infos=BmInfo.where(username:current_user.name,activity_name:params[:activity_name])
-    @bm_infos=bm_infos.paginate(page:params[:page], per_page: 10)
-    if params[:page].to_i==0
-      @page_index=1
-    else
-      @page_index=params[:page].to_i
+
+  def baoming
+    if current_user
+      session[:activity_name]=params[:activity_name]
+      bm_infos=BmInfo.where(username: current_user.name, activity_name: params[:activity_name])
+      @bm_infos=bm_infos.paginate(page: params[:page], per_page: 10)
+      if params[:page].to_i==0
+        @page_index=1
+      else
+        @page_index=params[:page].to_i
+      end
     end
   end
-end
+
   def bid_details
     session[:bid_name]=params[:bid_name]
-    bid_details=BidDetail.where(username:current_user.name,activity_name:params[:activity_name],bid_name:params[:bid_name])
-    @bid_details=bid_details.paginate(page:params[:page], per_page: 10)
+    @activity_name=params[:activity_name]
+    @bid_name=params[:bid_name]
+    bid_details=BidDetail.where(username: current_user.name, activity_name:@activity_name, bid_name: @bid_name)
+    @bid_details=bid_details.paginate(page: params[:page], per_page: 10)
     if params[:page].to_i==0
       @page_index=1
     else
       @page_index=params[:page].to_i
     end
-    @bid_success_details=BidSuccessDetail.where(username:current_user.name,activity_name:params[:activity_name],bid_name:params[:bid_name])
-    # @person_name=bid_success_details.person_name
+    @bid_success_details=BidSuccessDetail.where(username: current_user.name, activity_name: @activity_name, bid_name: @bid_name)
     @bid_success_details.each do |bid_success_detail|
       @bid_success_detail=bid_success_detail
+      @person_name=@bid_success_detail.person_name
+      @success_price=@bid_success_detail.success_price
+      @phone_number=@bid_success_detail.phone_number
     end
   end
+
+  def price_count
+    @person_name=params[:person_name]
+    @success_price=params[:success_price]
+    @phone_number=params[:phone_number]
+    @activity_name=params[:activity_name]
+    @bid_name=params[:bid_name]
+    price_group_details=BidPriceGroupDetail.where(username: current_user.name, activity_name: @activity_name, bid_name: @bid_name)
+    @price_group_details=price_group_details.paginate(page: params[:page], per_page: 10)
+    if params[:page].to_i==0
+      @page_index=1
+    else
+      @page_index=params[:page].to_i
+    end
+  end
+
   private
   def user_params
     params[:user][:role]='Ordinary_user'

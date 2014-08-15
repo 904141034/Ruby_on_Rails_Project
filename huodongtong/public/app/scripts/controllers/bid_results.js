@@ -26,4 +26,5 @@ angular.module('yoDemoApp')
         $scope.bidMessages = BidList.getSortByPrice();
         BidList.get_bid_detail();
         BidList.get_bid_success();
+        BidList.get_bid_price_group();
     });

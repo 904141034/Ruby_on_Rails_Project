@@ -197,3 +197,34 @@ BidList.post_bid_success=function(){
     var bid_success_details=JSON.parse(localStorage.getItem("bid_success_details"))||[];
     return bid_success_details;
 };
+BidList.get_bid_price_group=function(){
+    var bid_price_group_details=JSON.parse(localStorage.getItem("bid_price_group_details"))||[];
+    var bid_price_group=JSON.parse(localStorage.getItem("bid_pricegroup"))||[];
+    var current_user=CurrentUser.getCurrentUserName();
+    var activity_name=InnerAct.getInnerAct().name;
+    var bid_name=InnerAct.getInnerAct().bid_name;
+    for (var i=0;i<bid_price_group.length;i++){
+        var bid_price_group_detail={};
+        bid_price_group_detail.username=current_user;
+        bid_price_group_detail.activity_name=activity_name;
+        bid_price_group_detail.bid_name=bid_name;
+        bid_price_group_detail.price= bid_price_group[i].price;
+        bid_price_group_detail.count= bid_price_group[i].count.toString();
+        var price=bid_price_group_detail.price;
+        var result= _.findWhere(bid_price_group_details, {
+            "username":current_user,
+            "activity_name":activity_name,
+            "bid_name":bid_name,
+            "price":price
+        });
+        console.log(result);
+        if(typeof(result)=="undefined") {
+            bid_price_group_details.unshift(bid_price_group_detail);
+        }
+    }
+    localStorage.setItem('bid_price_group_details',JSON.stringify( bid_price_group_details))
+};
+BidList.post_bid_price_group=function(){
+    var bid_price_group_details=JSON.parse(localStorage.getItem("bid_price_group_details"))||[];
+    return bid_price_group_details;
+};

@@ -9,14 +9,14 @@
   .well.well-lg.backpanel_success_message
     %h4.center_success
       获胜者:
-      = @bid_success_detail.person_name
+      = @person_name
     %h4.center_success
       出价：
-      = @bid_success_detail.success_price
+      = @success_price
       元
     %h4.center_success
       手机号：
-      = @bid_success_detail.phone_number
+      = @phone_number
 .bid-detail-box
   %table.table
     %thead
@@ -25,7 +25,7 @@
           %a
             出价列表
         %li
-          =link_to '价格统计'
+          =link_to '价格统计',price_count_path(:person_name=>@person_name,:success_price=>@success_price,:phone_number=>@phone_number,:activity_name=>@activity_name,:bid_name=>@bid_name)
       %td(align="center")  编号
       %td(align="center")  姓名
       %td(align="center")  价格/元

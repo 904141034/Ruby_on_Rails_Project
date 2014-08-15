@@ -1,0 +1,37 @@
+%ol.breadcrumb.breadtitle
+  %li
+    %a{:href => user_index_path} 首页
+  %li
+    %a{:href => bid_list_path} 竞价列表
+  %li.active
+    = session[:bid_name]
+.single-form-container
+  .well.well-lg.backpanel_success_message
+    %h4.center_success
+      获胜者:
+      = @person_name
+    %h4.center_success
+      出价：
+      = @success_price
+      元
+    %h4.center_success
+      手机号：
+      = @phone_number
+.bid-detail-box
+  %table.table
+    %thead
+      %ul.nav.nav-tabs.nav-justified
+        %li.bidcenter
+          =link_to '出价列表',bid_details_path(:person_name=>@person_name,:success_price=>@success_price,:phone_number=>@phone_number,:activity_name=>@activity_name,:bid_name=>@bid_name)
+        %li.active
+          %a
+            价格统计
+      %td(align="center")  价格/元
+      %td(align="center")  人数
+    %tbody
+      - @price_group_details.each do |price_group_detail|
+        %tr
+          %td(align="center")= price_group_detail.price
+          %td(align="center")= price_group_detail.count
+  .paginate.pagestyle
+    = will_paginate @price_group_details, :previous_label=>'<<',:next_label=>'>>'

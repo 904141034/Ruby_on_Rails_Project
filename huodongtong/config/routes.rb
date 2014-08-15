@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   get'/bid_list',to:'users#bid_list',:as=>'bid_list'
   get '/baoming',to:'users#baoming',:as=>'baoming'
   get '/bid_details',to:'users#bid_details',:as=>'bid_details'
+  get '/price_count',to:'users#price_count',:ad=>'price_count'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
