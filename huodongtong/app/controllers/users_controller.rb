@@ -223,12 +223,14 @@ class UsersController < ApplicationController
     @post_bid_list_infos=params[:post_bid_list_infos]
     @post_bm_infos=params[:post_bm_infos]
     @post_bid_details=params[:post_bid_details]
+    @post_bid_success=params[:post_bid_success]
     result1=UserActivityMessageInfo.show_user_info(@currentlogUser, @post_user_activity_message)
     result2=BidListInfos.show_bid_list_info(@currentlogUser,@post_bid_list_infos)
     result3=BmInfo.show_bm_infos(@currentlogUser,@post_bm_infos)
     result4=BidDetail.show_bid_details(@currentlogUser,@post_bid_details)
+    result5=BidSuccessDetail.show_bid_success_details(@currentlogUser,@post_bid_success)
     respond_to do |format|
-      if result1=='true'&& result2=='true'&& result3=='true'&&result4=='true'
+      if result1=='true'&& result2=='true'&& result3=='true'&&result4=='true'&& result5=="true"
         format.json { render json: {data: 'true'} }
       else
         format.json { render json: {data: 'false'} }
@@ -279,6 +281,11 @@ end
       @page_index=1
     else
       @page_index=params[:page].to_i
+    end
+    @bid_success_details=BidSuccessDetail.where(username:current_user.name,activity_name:params[:activity_name],bid_name:params[:bid_name])
+    # @person_name=bid_success_details.person_name
+    @bid_success_details.each do |bid_success_detail|
+      @bid_success_detail=bid_success_detail
     end
   end
   private

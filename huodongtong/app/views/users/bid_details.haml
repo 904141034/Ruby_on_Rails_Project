@@ -7,6 +7,16 @@
     = session[:bid_name]
 .single-form-container
   .well.well-lg.backpanel_success_message
+    %h4.center_success
+      获胜者:
+      = @bid_success_detail.person_name
+    %h4.center_success
+      出价：
+      = @bid_success_detail.success_price
+      元
+    %h4.center_success
+      手机号：
+      = @bid_success_detail.phone_number
 .bid-detail-box
   %table.table
     %thead
