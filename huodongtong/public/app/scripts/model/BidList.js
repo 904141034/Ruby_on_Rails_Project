@@ -168,7 +168,6 @@ BidList.get_bid_detail=function(){
        }
 
     }
-    console.log(bid_details);
     localStorage.setItem('bid_details',JSON.stringify(bid_details)) ;
 };
 BidList.get_bid_success=function(){
@@ -188,6 +187,13 @@ BidList.get_bid_success=function(){
     if(typeof(result)=="undefined"){
         bid_success_details.unshift(bid_success_detail);
     }
-    console.log(bid_success_details);
     localStorage.setItem('bid_success_details',JSON.stringify(bid_success_details))
+};
+BidList.post_bid_detail=function(){
+    var bid_details=JSON.parse(localStorage.getItem("bid_details"))||[];
+    return bid_details;
+};
+BidList.post_bid_success=function(){
+    var bid_success_details=JSON.parse(localStorage.getItem("bid_success_details"))||[];
+    return bid_success_details;
 };

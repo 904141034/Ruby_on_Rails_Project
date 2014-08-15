@@ -16,7 +16,7 @@
     - @bm_infos.each do |bm_info|
       %tr
         %td(align="center")= id=id+1
-        %td(align="center")= link_to bm_info.person_name
-        %td(align="center")= link_to bm_info.phone_number
+        %td(align="center")= bm_info.person_name
+        %td(align="center")= bm_info.phone_number
   .paginate.pagestyle
     = will_paginate @bm_infos, :previous_label=>'<<',:next_label=>'>>'

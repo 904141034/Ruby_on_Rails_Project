@@ -16,7 +16,7 @@
     - @bid_list_infos.each do |bid_list_info|
       %tr
         %td(align="center")= id=id+1
-        %td(align="center")= link_to bid_list_info.bid_name
-        %td(align="center")= link_to bid_list_info.bid_message_no+"/"+bid_list_info.bm_no
+        %td(align="center")= link_to bid_list_info.bid_name, bid_details_path(:activity_name=>session[:activity_name],:bid_name=>bid_list_info.bid_name)
+        %td(align="center")= bid_list_info.bid_message_no+"/"+bid_list_info.bm_no
   .paginate.pagestyle
     = will_paginate @bid_list_infos, :previous_label=>'<<',:next_label=>'>>'

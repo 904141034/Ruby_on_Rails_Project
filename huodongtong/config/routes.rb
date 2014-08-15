@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   get '/user_index',to:'users#user_index',:as=>'user_index'
   get'/bid_list',to:'users#bid_list',:as=>'bid_list'
   get '/baoming',to:'users#baoming',:as=>'baoming'
+  get '/bid_details',to:'users#bid_details',:as=>'bid_details'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
