@@ -12,7 +12,7 @@
     - @user.each do |user|
       %tr
         %td(align="center")= id=id+1
-        %td(align="center")= user.name
+        %td(align="center")= link_to user.name,user_index_path(:username=>user.name)
         %td(align="center")
           = link_to "删除" ,delete_user_path(:name=>user[:name]),data:{ :confirm =>'您确定要删除'+user.name+'?'} , :method=>:delete
           = link_to "修改密码",change_password_path(:name=>user[:name])

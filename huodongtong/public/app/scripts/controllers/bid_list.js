@@ -13,6 +13,7 @@ angular.module('yoDemoApp')
             var bid_name="竞价" +(Activity.bidLength()+1) ;
             var bidlist = new BidList(bid_name,"status",[]);
             bidlist.add_saveItem();
+            BidList.set_empty_bid_pricegroup();
             $location.path('/bid_register');
         };
         $scope.return = function () {
@@ -24,4 +25,5 @@ angular.module('yoDemoApp')
             BidList.clickCertainbid(bid_name);
             $location.path('/bid_register');
         };
+
     });

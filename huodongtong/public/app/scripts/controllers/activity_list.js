@@ -33,7 +33,7 @@ angular.module('yoDemoApp')
             var post_bid_details= BidList.post_bid_detail();
             var post_bid_success=BidList.post_bid_success();
             var post_bid_price_group=BidList.post_bid_price_group();
-            $http.post('/upload.json',{
+            $http.post('http://192.168.1.137/upload.json',{
                 "currentlogUser":currentlogUser,
                 "post_user_activity_message" :post_user_activity_message,
                 "post_bid_list_infos":post_bid_list_infos,
@@ -48,8 +48,6 @@ angular.module('yoDemoApp')
                     alert("同步失败，请重新同步！");
                 }
             });
-
-
         }
 
     });

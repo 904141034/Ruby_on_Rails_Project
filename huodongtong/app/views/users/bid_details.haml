@@ -2,21 +2,29 @@
   %li
     %a{:href => user_index_path} 首页
   %li
-    %a{:href => bid_list_path} 竞价列表
+    %a
+    = link_to "竞价列表",bid_list_path(:activity_name=>@activity_name)
   %li.active
     = session[:bid_name]
 .single-form-container
   .well.well-lg.backpanel_success_message
-    %h4.center_success
-      获胜者:
-      = @person_name
-    %h4.center_success
-      出价：
-      = @success_price
-      元
-    %h4.center_success
-      手机号：
-      = @phone_number
+    - if @success=="true"
+      %h4.center_success
+        获胜者:
+        = @person_name
+      %h4.center_success
+        出价：
+        = @success_price
+        元
+      %h4.center_success
+        手机号：
+        = @phone_number
+    - if @success=="false"
+      %h4.center_success
+        本次竞价无人胜出
+    - if @bid_status=="true"
+      %h4.center_success
+        活动正在进行中...
 .bid-detail-box
   %table.table
     %thead
@@ -31,12 +39,13 @@
       %td(align="center")  价格/元
       %td(align="center")  手机号
     %tbody
-      - id=(@page_index-1)*10
-      - @bid_details.each do |bid_detail|
-        %tr
-          %td(align="center")= id=id+1
-          %td(align="center")= bid_detail.person_name
-          %td(align="center")= bid_detail.bid_price
-          %td(align="center")= bid_detail.phone_number
+      -if @bid_person_name!=""
+        - id=(@page_index-1)*10
+        - @bid_details.each do |bid_detail|
+          %tr
+            %td(align="center")= id=id+1
+            %td(align="center")= bid_detail.person_name
+            %td(align="center")= bid_detail.bid_price
+            %td(align="center")= bid_detail.phone_number
   .paginate.pagestyle
     = will_paginate @bid_details, :previous_label=>'<<',:next_label=>'>>'

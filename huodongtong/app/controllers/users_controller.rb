@@ -11,13 +11,11 @@ class UsersController < ApplicationController
 
   def login
     create_admin
-    if current_user
-      if current_user.role=="admin"
-        redirect_to :manager_index
-      else
-        if current_user.role=="Ordinary_user"
-          redirect_to :user_index
-        end
+    if current_admin
+      redirect_to :manager_index
+    else
+      if current_user
+        redirect_to :user_index
       end
     end
   end
@@ -25,11 +23,12 @@ class UsersController < ApplicationController
   def create_login_session
     user=User.find_by_name(params[:name])
     if user && user.authenticate(params[:password])
-      cookies.permanent[:token]=user.token
       if user.role=='Ordinary_user'
+        cookies.permanent[:token]=user.token
         redirect_to :user_index
       else
         if user.role=='admin'
+          cookies.permanent[:token_admin]=user.token
           redirect_to :manager_index
         end
       end
@@ -39,22 +38,29 @@ class UsersController < ApplicationController
     end
   end
 
-
   def logout
-    cookies.delete(:token)
+    if current_admin
+      if current_user
+        cookies.delete(:token_admin)
+        cookies.delete(:token)
+      else
+        cookies.delete(:token_admin)
+      end
+    end
+    if current_user && !current_admin
+      cookies.delete(:token)
+    end
     flash[:error].display
     redirect_to root_url
   end
 
   def create
-    if current_user
-      if current_user.role=='admin'
-        @user=User.new(user_params)
-        if @user.save
-          redirect_to :add_user
-        else
-          render :add_user
-        end
+    if current_admin
+      @user=User.new(user_params)
+      if @user.save
+        redirect_to :add_user
+      else
+        render :add_user
       end
     else
       @user=User.new(user_params)
@@ -71,15 +77,13 @@ class UsersController < ApplicationController
     if User.any?
     else
       @user=User.new(:name => 'admin', :password => 'admin', :password_confirmation => 'admin', :forget_password_question => 'admin', :forget_password_answer => 'admin', :role => 'admin')
-      if @user.save
-        cookies.permanent[:token]=@user.token
-      end
+      @user.save
     end
   end
 
   def manager_index
     session[:result]=''
-    if current_user
+    if current_admin
       user=User.where(:role => 'Ordinary_user')
       @user=user.paginate(page: params[:page], per_page: 10)
       if params[:page].to_i==0
@@ -93,7 +97,7 @@ class UsersController < ApplicationController
   end
 
   def add_user
-    if current_user
+    if current_admin
       @user=User.new
     else
       redirect_to :root
@@ -101,7 +105,7 @@ class UsersController < ApplicationController
   end
 
   def delete_user
-    if current_user
+    if current_admin
       User.find_by_name(params[:name]).delete
       redirect_to :manager_index
     else
@@ -133,7 +137,7 @@ class UsersController < ApplicationController
   end
 
   def change_password
-    if current_user
+    if current_admin
       session[:name]=params[:name]
     else
       redirect_to :root
@@ -185,13 +189,15 @@ class UsersController < ApplicationController
       user.password=params[:password]
       user.password_confirmation=params[:password_confirmation]
       if user.save
-        cookies.permanent[:token]=user.token
-        if current_user.role=="admin"
+        if user.role=='admin'
+          cookies.permanent[:token_admin]=user.token
           redirect_to :manager_index
         else
-          redirect_to :user_index
+          if user.role=='Ordinary_user'
+            cookies.permanent[:token]=user.token
+            redirect_to :user_index
+          end
         end
-
       end
     else
       if params[:password]==""||params[:password_confirmation]==""
@@ -230,7 +236,7 @@ class UsersController < ApplicationController
     result3=BmInfo.show_bm_infos(@currentlogUser, @post_bm_infos)
     result4=BidDetail.show_bid_details(@currentlogUser, @post_bid_details)
     result5=BidSuccessDetail.show_bid_success_details(@currentlogUser, @post_bid_success)
-    result6=BidPriceGroupDetail.show_bid_price_group_details(@currentlogUser,@post_bid_price_group)
+    result6=BidPriceGroupDetail.show_bid_price_group_details(@currentlogUser, @post_bid_price_group)
     respond_to do |format|
       if result1=='true'&& result2=='true'&& result3=='true'&&result4=='true'&& result5=="true" && result6=='true'
         format.json { render json: {data: 'true'} }
@@ -241,6 +247,10 @@ class UsersController < ApplicationController
   end
 
   def user_index
+    if current_admin && !current_user
+      @user=User.find_by_name(params[:username])
+      cookies.permanent[:token]=@user.token
+    end
     if current_user
       user_activity_message_info=UserActivityMessageInfo.where(username: current_user.name)
       @user_activity_message_info=user_activity_message_info.paginate(page: params[:page], per_page: 10)
@@ -249,8 +259,10 @@ class UsersController < ApplicationController
       else
         @page_index=params[:page].to_i
       end
+    else
+        redirect_to :root
     end
-  end
+ end
 
   def bid_list
     if current_user
@@ -282,8 +294,12 @@ class UsersController < ApplicationController
     session[:bid_name]=params[:bid_name]
     @activity_name=params[:activity_name]
     @bid_name=params[:bid_name]
-    bid_details=BidDetail.where(username: current_user.name, activity_name:@activity_name, bid_name: @bid_name)
-    @bid_details=bid_details.paginate(page: params[:page], per_page: 10)
+    @bid_detailss=BidDetail.where(username: current_user.name, activity_name: @activity_name, bid_name: @bid_name)
+    @bid_details=@bid_detailss.paginate(page: params[:page], per_page: 10)
+    @bid_details.each do |bid_detail|
+      @bid_status=bid_detail.status
+      @bid_person_name=bid_detail.person_name
+    end
     if params[:page].to_i==0
       @page_index=1
     else
@@ -295,6 +311,11 @@ class UsersController < ApplicationController
       @person_name=@bid_success_detail.person_name
       @success_price=@bid_success_detail.success_price
       @phone_number=@bid_success_detail.phone_number
+      if @person_name==""
+        @success="false"
+      else
+        @success="true"
+      end
     end
   end
 
@@ -305,12 +326,14 @@ class UsersController < ApplicationController
     @activity_name=params[:activity_name]
     @bid_name=params[:bid_name]
     price_group_details=BidPriceGroupDetail.where(username: current_user.name, activity_name: @activity_name, bid_name: @bid_name)
-    @price_group_details=price_group_details.paginate(page: params[:page], per_page: 10)
-    if params[:page].to_i==0
-      @page_index=1
+    @price_group_detailss=price_group_details.paginate(page: params[:page], per_page: 10)
+    if @person_name==""||@person_name==nil
+      @success="false"
     else
-      @page_index=params[:page].to_i
+      @success="true"
     end
+    @bid_details=BidDetail.where(username: current_user.name, activity_name: @activity_name, bid_name: @bid_name)
+    @bid_status=@bid_details.first.status
   end
 
   private

@@ -19,11 +19,22 @@ angular.module('yoDemoApp')
         $scope.stop = function () {
                 event.returnValue = confirm("确认要结束本轮竞价吗？");
                 event.returnValue?BidList.stopBiddingAllFunctions($scope,$location): $scope.startbid = true;
+            if (event.returnValue){
+                BidList.stop_bid_status();
+                BidList.store_bid_success();
+
+            }
             };
         //   refresh方法刷新页面
         $scope.refresh = function () {
             var bidMessages=BidList.refresh();
             $scope.bidMessages = bidMessages;
             $scope.bidMessageNO=bidMessages.length;
-        }
+            BidList.get_bid_detail();
+            BidList.Bidding_SortAndCountActions();
+            BidList.get_bid_price_group();
+
+        };
+        BidList.get_bid_detail();
+
     });
