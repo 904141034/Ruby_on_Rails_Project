@@ -3,7 +3,7 @@
  * Created by lishaodan on 14-7-22.
  */
 angular.module('yoDemoApp')
-    .controller('bid_listCtrl', function ($scope, $location) {
+    .controller('bid_listCtrl', function ($scope, $location,$http) {
         $scope.awesomeThings = [
             'HTML5 Boilerplate',
             'AngularJS',
@@ -14,7 +14,10 @@ angular.module('yoDemoApp')
             var bidlist = new BidList(bid_name,"status",[]);
             bidlist.add_saveItem();
             BidList.set_empty_bid_pricegroup();
+            BidList.get_bid_detail();
+            Activity.upload($http);
             $location.path('/bid_register');
+
         };
         $scope.return = function () {
             $location.path('/activity_list');

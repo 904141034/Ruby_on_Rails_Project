@@ -152,6 +152,32 @@ Activity.post_user_activity_message=function(){
     }
     return current_user_activity_messages;
 };
+Activity.upload=function($http){
+    var currentlogUser=CurrentUser.getCurrentUser().userName;
+    var current_activity=InnerAct.getInnerAct().name;
+    var post_user_activity_message=Activity.post_user_activity_message();
+    var post_bid_list_infos=BidList.post_bid_message();
+    var post_bm_infos=BmMessage.post_bm_message();
+    var post_bid_details= BidList.post_bid_detail();
+    var post_bid_success=BidList.post_bid_success();
+    var post_bid_price_group=BidList.post_bid_price_group();
+    $http.post('/upload.json',{
+        "currentlogUser":currentlogUser,
+        "current_activity":current_activity,
+        "post_user_activity_message" :post_user_activity_message,
+        "post_bid_list_infos":post_bid_list_infos,
+        "post_bm_infos":post_bm_infos,
+        "post_bid_details":post_bid_details,
+        "post_bid_success":post_bid_success,
+        "post_bid_price_group":post_bid_price_group
+    }).success(function(back){
+        if(back.data=="true"){
+            alert("同步成功！");
+        }else{
+            alert("同步失败，请重新同步！");
+        }
+    });
+};
 
 
 

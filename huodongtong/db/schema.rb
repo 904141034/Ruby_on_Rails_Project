@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140815071518) do
+ActiveRecord::Schema.define(version: 20140818061759) do
 
   create_table "bid_details", force: true do |t|
     t.string   "username"
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 20140815071518) do
     t.string   "bid_message_no"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "current_activity"
   end
 
   create_table "bid_price_group_details", force: true do |t|
@@ -61,6 +62,13 @@ ActiveRecord::Schema.define(version: 20140815071518) do
     t.string   "activity_name"
     t.string   "person_name"
     t.string   "phone_number"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "current_user_activities", force: true do |t|
+    t.string   "username"
+    t.string   "activity_name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

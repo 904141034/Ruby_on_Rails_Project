@@ -225,6 +225,7 @@ class UsersController < ApplicationController
 
   def upload
     @currentlogUser=params[:currentlogUser]
+    @current_activity=params[:current_activity]
     @post_user_activity_message=params[:post_user_activity_message]
     @post_bid_list_infos=params[:post_bid_list_infos]
     @post_bm_infos=params[:post_bm_infos]
@@ -232,13 +233,14 @@ class UsersController < ApplicationController
     @post_bid_success=params[:post_bid_success]
     @post_bid_price_group=params[:post_bid_price_group]
     result1=UserActivityMessageInfo.show_user_info(@currentlogUser, @post_user_activity_message)
-    result2=BidListInfos.show_bid_list_info(@currentlogUser, @post_bid_list_infos)
+    result2=BidListInfos.show_bid_list_info(@currentlogUser, @post_bid_list_infos,@current_activity)
     result3=BmInfo.show_bm_infos(@currentlogUser, @post_bm_infos)
     result4=BidDetail.show_bid_details(@currentlogUser, @post_bid_details)
     result5=BidSuccessDetail.show_bid_success_details(@currentlogUser, @post_bid_success)
     result6=BidPriceGroupDetail.show_bid_price_group_details(@currentlogUser, @post_bid_price_group)
+    result7=CurrentUserActivity.store_current_activity(@currentlogUser,@current_activity)
     respond_to do |format|
-      if result1=='true'&& result2=='true'&& result3=='true'&&result4=='true'&& result5=="true" && result6=='true'
+      if result1=='true'&& result2=='true'&& result3=='true'&&result4=='true'&& result5=="true" && result6=='true' &&result7=='true'
         format.json { render json: {data: 'true'} }
       else
         format.json { render json: {data: 'false'} }
@@ -260,9 +262,9 @@ class UsersController < ApplicationController
         @page_index=params[:page].to_i
       end
     else
-        redirect_to :root
+      redirect_to :root
     end
- end
+  end
 
   def bid_list
     if current_user
@@ -334,6 +336,21 @@ class UsersController < ApplicationController
     end
     @bid_details=BidDetail.where(username: current_user.name, activity_name: @activity_name, bid_name: @bid_name)
     @bid_status=@bid_details.first.status
+  end
+
+  def tongbu_show
+    @current_activity_user=CurrentUserActivity.find_by_username(current_user.name)
+    @current_activity_name=@current_activity_user.activity_name
+    @bid_details=BidDetail.where(username: current_user.name, activity_name: @current_activity_name, status: 'true')
+    @bid_details.each do |bid_detail|
+      @bid_name=bid_detail.bid_name
+    end
+    @bid_list=BidListInfos.where(username: current_user.name, activity_name: @current_activity_name, bid_name: @bid_name)
+    @bid_list.each do |bid_list|
+      @bm_no=bid_list.bm_no
+      @bid_message_no=bid_list.bid_message_no
+    end
+
   end
 
   private
