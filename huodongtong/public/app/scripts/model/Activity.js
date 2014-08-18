@@ -155,6 +155,7 @@ Activity.post_user_activity_message=function(){
 Activity.upload=function($http){
     var currentlogUser=CurrentUser.getCurrentUser().userName;
     var current_activity=InnerAct.getInnerAct().name;
+    var current_bid=InnerAct.getInnerAct().bid_name;
     var post_user_activity_message=Activity.post_user_activity_message();
     var post_bid_list_infos=BidList.post_bid_message();
     var post_bm_infos=BmMessage.post_bm_message();
@@ -164,6 +165,7 @@ Activity.upload=function($http){
     $http.post('/upload.json',{
         "currentlogUser":currentlogUser,
         "current_activity":current_activity,
+        "current_bid":current_bid,
         "post_user_activity_message" :post_user_activity_message,
         "post_bid_list_infos":post_bid_list_infos,
         "post_bm_infos":post_bm_infos,

@@ -226,6 +226,7 @@ class UsersController < ApplicationController
   def upload
     @currentlogUser=params[:currentlogUser]
     @current_activity=params[:current_activity]
+    @current_bid=params[:current_bid]
     @post_user_activity_message=params[:post_user_activity_message]
     @post_bid_list_infos=params[:post_bid_list_infos]
     @post_bm_infos=params[:post_bm_infos]
@@ -233,12 +234,12 @@ class UsersController < ApplicationController
     @post_bid_success=params[:post_bid_success]
     @post_bid_price_group=params[:post_bid_price_group]
     result1=UserActivityMessageInfo.show_user_info(@currentlogUser, @post_user_activity_message)
-    result2=BidListInfos.show_bid_list_info(@currentlogUser, @post_bid_list_infos,@current_activity)
+    result2=BidListInfos.show_bid_list_info(@currentlogUser, @post_bid_list_infos, @current_activity)
     result3=BmInfo.show_bm_infos(@currentlogUser, @post_bm_infos)
     result4=BidDetail.show_bid_details(@currentlogUser, @post_bid_details)
     result5=BidSuccessDetail.show_bid_success_details(@currentlogUser, @post_bid_success)
     result6=BidPriceGroupDetail.show_bid_price_group_details(@currentlogUser, @post_bid_price_group)
-    result7=CurrentUserActivity.store_current_activity(@currentlogUser,@current_activity)
+    result7=CurrentUserActivity.store_current_activity(@currentlogUser, @current_activity,@current_bid)
     respond_to do |format|
       if result1=='true'&& result2=='true'&& result3=='true'&&result4=='true'&& result5=="true" && result6=='true' &&result7=='true'
         format.json { render json: {data: 'true'} }
@@ -342,17 +343,45 @@ class UsersController < ApplicationController
     @current_activity_user=CurrentUserActivity.find_by_username(current_user.name)
     @current_activity_name=@current_activity_user.activity_name
     @bid_details=BidDetail.where(username: current_user.name, activity_name: @current_activity_name, status: 'true')
-    @bid_details.each do |bid_detail|
-      @bid_name=bid_detail.bid_name
-    end
-    @bid_list=BidListInfos.where(username: current_user.name, activity_name: @current_activity_name, bid_name: @bid_name)
-    @bid_list.each do |bid_list|
-      @bm_no=bid_list.bm_no
-      @bid_message_no=bid_list.bid_message_no
-    end
+    if  @bid_details!=[]
+      @tongbu="true"
+      @bid_details.each do |bid_detail|
+        @bid_name=bid_detail.bid_name
+      end
+      @bid_list=BidListInfos.where(username: current_user.name, activity_name: @current_activity_name, bid_name: @bid_name)
+      @bid_list.each do |bid_list|
+        @bm_no=bid_list.bm_no
+        @bid_message_no=bid_list.bid_message_no
+        @num_result=@bid_message_no+'/'+@bm_no
+      end
+      @bid_price_group=BidPriceGroupDetail.where(username: current_user.name, activity_name: @current_activity_name, bid_name: @bid_name, count: 1)
+      @bid=[]
+      @bid_price_group.each do |bid_price_group|
+        @bid.push(BidDetail.find_by_bid_price(bid_price_group.price))
+      end
+    else
 
+        redirect_to :show_over,session[:activity_name]=>@current_activity_name
+
+    end
   end
-
+def show_over
+  @current_activity_name=session[:activity_name]
+  @ccurrent_user=CurrentUserActivity.where(username: current_user.name,activity_name:@current_activity_name)
+  @ccurrent_user.each do |current_user|
+    @bidname=current_user.current_bid
+  end
+  @bid_name="第"+@bidname[2]+"次竞价"
+  @bid=BidDetail.where(username: current_user.name,activity_name:@current_activity_name,status:'true')
+  @bid_success=BidSuccessDetail .where(username: current_user.name, activity_name: @current_activity_name,bid_name:@bid_name)
+  if @bid!=[]
+    @person_name=@bid_success[0].person_name
+    @success_price=@bid_success[0].success_price
+    @phone_number=@bid_success[0].phone_number
+  else
+    redirect_to :user_index,params[:username]=>current_user.name
+  end
+end
   private
   def user_params
     params[:user][:role]='Ordinary_user'

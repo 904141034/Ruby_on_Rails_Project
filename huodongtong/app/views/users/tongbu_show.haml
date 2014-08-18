@@ -1,7 +1,17 @@
 .single-form-container
-  .well.well-lg.backpanel_success_message
-    %h3.center_success
-      =@current_activity_name
-    %h3.center_success
-      参与人数：
-      =@bid_message_no+'/'+@bm_no
+   .well.well-lg.backpanel_success_message
+      -if @tongbu=="true"
+         %h3.center_success
+            =@current_activity_name
+         %h3.center_success
+            参与人数：
+            =@num_result
+-if @tongbu=="true"
+   %table.table.panel-first-row.table-bordered
+      %tr
+         %td(align="center")  姓名
+         %td(align="center")  电话
+      - @bid.each do |bid_details|
+         %tr
+            %td(align="center")=bid_details.person_name
+            %td(align="center")=bid_details.phone_number[0]+bid_details.phone_number[1]+bid_details.phone_number[2]+bid_details.phone_number[3]+"XXX"+bid_details.phone_number[7]+bid_details.phone_number[8]+bid_details.phone_number[9]+bid_details.phone_number[10]

@@ -1,0 +1,15 @@
+.single-form-container
+   .well.well-lg.show_success_result
+      %h2.bid-result1
+         =@current_activity_name
+      %h2.bid-result2
+         比赛结果
+      %h2.bid-result3
+         获胜者：
+         =@person_name
+      %h2.bid-result3
+         出价：
+         =@success_price
+      %h2.bid-result3
+         电话：
+         =@phone_number[0]+@phone_number[1]+@phone_number[2]+@phone_number[3]+'XXXX'+@phone_number[8]+@phone_number[9]+@phone_number[10]

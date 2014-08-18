@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   get '/price_count',to:'users#price_count',:as=>'price_count'
   get '/tongbu_show',to:'users#tongbu_show',:as=>'tongbu_show'
   post '/upload_bid_details',to:'users#upload_bid_details'
+  get '/show_over',to:'users#show_over'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -4,7 +4,7 @@
  */
 angular.module('yoDemoApp')
 
-    .controller('bid_resultsCtrl', function ($scope, $location, $timeout) {
+    .controller('bid_resultsCtrl', function ($scope, $location, $timeout,$http) {
         $scope.awesomeThings = [
             'HTML5 Boilerplate',
             'AngularJS',
@@ -15,6 +15,7 @@ angular.module('yoDemoApp')
         $timeout(function () {
             $('#bid_resultsModal').modal('hide');
             $scope.showsuccess = "true";
+
         }, 3000);
 
         BidList.successResult($scope);
@@ -28,5 +29,6 @@ angular.module('yoDemoApp')
 
 
         BidList.get_bid_success();
+        Activity.upload($http);
 
     });

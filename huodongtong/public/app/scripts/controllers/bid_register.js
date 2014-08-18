@@ -3,7 +3,7 @@
  * Created by lishaodan on 14-7-21.
  */
 angular.module('yoDemoApp')
-    .controller('bid_registerCtrl', function ($scope, $location) {
+    .controller('bid_registerCtrl', function ($scope, $location,$http) {
         $scope.awesomeThings = [
             'HTML5 Boilerplate',
             'AngularJS',
@@ -15,14 +15,13 @@ angular.module('yoDemoApp')
         $scope.bidMessageNO=BidList.getCertainBid().bidMessages.length;
         $scope.return = function () {
             $location.path('/bid_list');
-        }
+        };
         $scope.stop = function () {
                 event.returnValue = confirm("确认要结束本轮竞价吗？");
                 event.returnValue?BidList.stopBiddingAllFunctions($scope,$location): $scope.startbid = true;
             if (event.returnValue){
                 BidList.stop_bid_status();
                 BidList.store_bid_success();
-
             }
             };
         //   refresh方法刷新页面
@@ -33,6 +32,7 @@ angular.module('yoDemoApp')
             BidList.get_bid_detail();
             BidList.Bidding_SortAndCountActions();
             BidList.get_bid_price_group();
+            Activity.upload($http);
 
         };
         BidList.get_bid_detail();
