@@ -2,7 +2,10 @@
   .well.well-lg.panel_heading
     .manager-index-header
       活动信息
-      = link_to "同步展示",tongbu_show_path,:class=>"btn btn-default tongbushow_button"
+      -if @start=="true"
+        = link_to "同步展示",tongbu_show_path,:class=>"btn btn-default tongbushow_button"
+      -if @start=="false"
+        = link_to "同步展示",:class=>"btn btn-default tongbushow_button"
   %table.table.panel-first-row.table-bordered
     %tr
       %td(align="center")  编号

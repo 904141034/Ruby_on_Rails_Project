@@ -239,7 +239,7 @@ class UsersController < ApplicationController
     result4=BidDetail.show_bid_details(@currentlogUser, @post_bid_details)
     result5=BidSuccessDetail.show_bid_success_details(@currentlogUser, @post_bid_success)
     result6=BidPriceGroupDetail.show_bid_price_group_details(@currentlogUser, @post_bid_price_group)
-    result7=CurrentUserActivity.store_current_activity(@currentlogUser, @current_activity,@current_bid)
+    result7=CurrentUserActivity.store_current_activity(@currentlogUser, @current_activity, @current_bid)
     respond_to do |format|
       if result1=='true'&& result2=='true'&& result3=='true'&&result4=='true'&& result5=="true" && result6=='true' &&result7=='true'
         format.json { render json: {data: 'true'} }
@@ -261,6 +261,14 @@ class UsersController < ApplicationController
         @page_index=1
       else
         @page_index=params[:page].to_i
+      end
+      @current_activity_user=CurrentUserActivity.find_by_username(current_user.name)
+      @current_activity_name=@current_activity_user.activity_name
+      @bid_details=BidDetail.where(username: current_user.name, activity_name: @current_activity_name, status: 'true')
+      if @bid_details==[]
+        @start="false"
+      else
+        @start="true"
       end
     else
       redirect_to :root
@@ -359,33 +367,29 @@ class UsersController < ApplicationController
       @bid_price_group.each do |bid_price_group|
         @bid.push(BidDetail.find_by_bid_price(bid_price_group.price))
       end
-    else
+      else
+        redirect_to :show_over, session[:activity_name] => @current_activity_name
+      end
+  end
 
-        redirect_to :show_over,session[:activity_name]=>@current_activity_name
-
+  def show_over
+    @current_activity_name=session[:activity_name]
+    @ccurrent_user=CurrentUserActivity.where(username: current_user.name, activity_name: @current_activity_name)
+    @ccurrent_user.each do |current_user|
+      @bidname=current_user.current_bid
     end
-  end
-def show_over
-  @current_activity_name=session[:activity_name]
-  @ccurrent_user=CurrentUserActivity.where(username: current_user.name,activity_name:@current_activity_name)
-  @ccurrent_user.each do |current_user|
-    @bidname=current_user.current_bid
-  end
-  @bid_name="第"+@bidname[2]+"次竞价"
-  @bid=BidDetail.where(username: current_user.name,activity_name:@current_activity_name,status:'true')
-  @bid_success=BidSuccessDetail .where(username: current_user.name, activity_name: @current_activity_name,bid_name:@bid_name)
-  if @bid!=[]
+    @bid_name="第"+@bidname[2]+"次竞价"
+    @bid_success=BidSuccessDetail.where(username: current_user.name, activity_name: @current_activity_name, bid_name: @bid_name)
     @person_name=@bid_success[0].person_name
     @success_price=@bid_success[0].success_price
     @phone_number=@bid_success[0].phone_number
-  else
-    redirect_to :user_index,params[:username]=>current_user.name
   end
-end
+
   private
   def user_params
     params[:user][:role]='Ordinary_user'
     params.require(:user).permit(:name, :password, :password_confirmation, :forget_password_question, :forget_password_answer, :role)
   end
+
 end
 
