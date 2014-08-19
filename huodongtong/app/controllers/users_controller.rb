@@ -367,9 +367,9 @@ class UsersController < ApplicationController
       @bid_price_group.each do |bid_price_group|
         @bid.push(BidDetail.find_by_bid_price(bid_price_group.price))
       end
-      else
+    else
         redirect_to :show_over, session[:activity_name] => @current_activity_name
-      end
+    end
   end
 
   def show_over
