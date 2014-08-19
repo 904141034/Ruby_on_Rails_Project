@@ -366,12 +366,13 @@ class UsersController < ApplicationController
         @num_result=@bid_message_no+'/'+@bm_no
       end
       @bid_price_group=BidPriceGroupDetail.where(username: current_user.name, activity_name: @current_activity_name, bid_name: @bid_name, count: 1)
+      @bid_price_group.limit(10)
       @bid=[]
       @bid_price_group.each do |bid_price_group|
         @bid.push(BidDetail.find_by_bid_price(bid_price_group.price))
       end
     else
-        redirect_to :show_over, session[:activity_name] => @current_activity_name
+      redirect_to :show_over, session[:activity_name] => @current_activity_name
     end
   end
 
@@ -383,9 +384,14 @@ class UsersController < ApplicationController
     end
     @bid_name="第"+@bidname[2]+"次竞价"
     @bid_success=BidSuccessDetail.where(username: current_user.name, activity_name: @current_activity_name, bid_name: @bid_name)
-    @person_name=@bid_success[0].person_name
-    @success_price=@bid_success[0].success_price
-    @phone_number=@bid_success[0].phone_number
+    if @bid_success[0].person_name!=""
+      @success="true"
+      @person_name=@bid_success[0].person_name
+      @success_price=@bid_success[0].success_price
+      @phone_number=@bid_success[0].phone_number
+    else
+      @success="false"
+    end
   end
 
   private

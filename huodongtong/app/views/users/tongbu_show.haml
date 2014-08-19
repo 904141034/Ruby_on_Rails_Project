@@ -14,3 +14,8 @@
       %tr
       %td(align="center")=bid_details.person_name
       %td(align="center")=bid_details.phone_number[0]+bid_details.phone_number[1]+bid_details.phone_number[2]+bid_details.phone_number[3]+"XXX"+bid_details.phone_number[7]+bid_details.phone_number[8]+bid_details.phone_number[9]+bid_details.phone_number[10]
+%script{:language => "JavaScript"}
+   function myrefresh() {
+   window.location.reload();
+   }
+   setTimeout('myrefresh()',3000);

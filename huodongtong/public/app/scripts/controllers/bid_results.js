@@ -12,11 +12,11 @@ angular.module('yoDemoApp')
         ];
         $scope.showsuccess = "false";
         $('#bid_resultsModal').modal("show");
-//        $timeout(function () {
-//            $('#bid_resultsModal').modal('hide');
-//            $scope.showsuccess = "true";
-//
-//        }, 3000);
+        $timeout(function () {
+            $('#bid_resultsModal').modal('hide');
+            $scope.showsuccess = "true";
+
+        }, 3000);
 
         BidList.successResult($scope);
 
