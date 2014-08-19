@@ -82,6 +82,9 @@ class UsersController < ApplicationController
   end
 
   def manager_index
+    if current_user
+      cookies.delete(:token)
+    end
     session[:result]=''
     if current_admin
       user=User.where(:role => 'Ordinary_user')

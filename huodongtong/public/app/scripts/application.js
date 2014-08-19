@@ -8,7 +8,9 @@ var myModule = {
         var namePhone=myModule.handlebmMessage(json_message);
         if(namePhone!={} && typeof(namePhone)!="undefined"){
             var return_namePhone= BmMessage.bYes(namePhone);
-            myModule.sendbmMessage(return_namePhone);
+           if(return_namePhone.message!=""){
+               myModule.sendbmMessage(return_namePhone);
+           }
         }
     },
     handlebmhead:function(json_message){
@@ -31,8 +33,8 @@ var myModule = {
         var get_name = message.substr(2);
         var get_phone = json_message.messages[0].phone;
         var namePhone={};
-        if(bb!=(-1)){
-            bb==0 ? namePhone=BmMessage.bYes1(get_name,get_phone):namePhone={};
+        if(bb==0){
+            namePhone=BmMessage.bYes1(get_name,get_phone);
         }
         return namePhone;
     },
@@ -61,14 +63,13 @@ var myModule = {
         var mess = json_message.messages[0].message;
         var message = mess.replace(/\s/g, "");
         var jj = message.search(/jj/i);
-        var get_bidPhone = json_message.messages[0].phone;
         if(jj==0){
+            var get_bidPhone = json_message.messages[0].phone;
             var get_bidPrice = message.substr(2);
             var messagereturn=JJMessage.JYes(get_bidPrice,get_bidPhone);
             native_accessor.send_sms(get_bidPhone, messagereturn);
             myModule.refreshJJ();
         }
-
     },
     refreshJJ:function(){
         //获得竞价报名id刷新竞价报名页面

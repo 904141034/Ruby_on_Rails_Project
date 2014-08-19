@@ -8,6 +8,7 @@
             你好，
             -if current_admin
               管理员
+              \#{link_to "退出", logout_path, method: 'delete', class: 'logout_title'}
             -if current_user
               \#{p current_user.name}
-            \#{link_to "退出", logout_path, method: 'delete', class: 'logout_title'}
+              =link_to '退出',manager_index_path

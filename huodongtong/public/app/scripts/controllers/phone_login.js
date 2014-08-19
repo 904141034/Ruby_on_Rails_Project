@@ -8,7 +8,7 @@ angular.module('yoDemoApp')
             $scope.display = false;
             var name=$scope.user_name;
             var password=$scope.user_password;
-            $http.post('/get_http_user_log.json',{
+            $http.post('http://192.168.1.137/get_http_user_log.json',{
                 "name":name,
                 "password":password
             }).success(function(back){

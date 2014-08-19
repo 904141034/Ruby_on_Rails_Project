@@ -35,6 +35,7 @@ BmMessage.handlesmsMessage=function(namePhone){
     var bmMessages=Activity.return_bmMessages();
     var result=_.findWhere(bmMessages,{phone_number:namePhone.get_phone});
     if (typeof(result) == "undefined") {
+
         var bm = new BmMessage(namePhone.get_name, namePhone.get_phone);
         bm.add_saveItem();
         namePhone.message="恭喜！报名成功";
@@ -45,7 +46,7 @@ BmMessage.handlesmsMessage=function(namePhone){
 BmMessage.idRegistered=function(get_bidPhone){
     var bmMessages=Activity.return_bmMessages();
     var result=_.findWhere(bmMessages,{phone_number:get_bidPhone});
-    var person_name;
+    var person_name="";
     typeof(result)=="undefined"? person_name="":person_name=result.person_name;
     return person_name;
 };

@@ -4,13 +4,13 @@
     .header-left
         button.btn.btn-primary.btn-lg.btn-block.btn-4(ng-click="return()") 返回
 
-#bid_resultsModal.modal.fade.center
-    .modal-dialog.center
+#bid_resultsModal.modal.fade
+    .modal-dialog
         .modal-content
             .modal-body
                 a.close(data-dismiss="modal" ) &times
                 br
-                h5.text-center {{bid_successMessage}}
+                h5(style="margin-left:90px") {{bid_successMessage}}
                 br
 
 
